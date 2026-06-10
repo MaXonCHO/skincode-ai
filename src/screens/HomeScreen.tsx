@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Logo } from '../components/Logo'
+import heroPhoto from '../../photo/hero-photo-2.png'
 
 interface HomeScreenProps {
   onStart: () => void
@@ -19,7 +20,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
         >
           <div className="home-screen__image-wrapper">
             <img
-              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fe5?w=800&q=80&auto=format&fit=crop&crop=face"
+              src={heroPhoto}
               alt="Чистая кожа"
               className="home-screen__image"
             />

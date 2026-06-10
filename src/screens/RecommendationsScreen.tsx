@@ -6,7 +6,12 @@ import { SlideToScan } from '../components/SlideToScan'
 import { useCameraStream } from '../hooks/useCameraStream'
 import { formatPrice, formatProductTag, formatProfileValue } from '../utils/matching'
 import type { ScoredProduct, SkinProfile } from '../types'
-import foundationJar from '../../photo/example.png'
+import productOne from '../../photo/product-1.png'
+import productTwo from '../../photo/product-2.png'
+import productThree from '../../photo/product-3.png'
+import productFour from '../../photo/product-4.png'
+
+const productImages = [productOne, productTwo, productThree, productFour]
 
 interface RecommendationsScreenProps {
   profile: SkinProfile
@@ -24,8 +29,20 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
 
       <div className="recommendations-screen__top">
         <motion.div
+          className="recommendations-screen__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="recommendations-screen__eyebrow">Персональная подборка завершена</span>
+          <h2 className="recommendations-screen__title">
+            Вот оттенки, которые<br />тебе подойдут
+          </h2>
+        </motion.div>
+
+        <motion.div
           className="recommendations-screen__camera-card"
-          initial={{ opacity: 0, x: -24 }}
+          initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
@@ -55,18 +72,6 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
             </div>
           </div>
         </motion.div>
-
-        <motion.div
-          className="recommendations-screen__header"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <span className="recommendations-screen__eyebrow">Персональная подборка завершена</span>
-          <h2 className="recommendations-screen__title">
-            Вот оттенки, которые<br />тебе подойдут
-          </h2>
-        </motion.div>
       </div>
 
       <div className="recommendations-screen__carousel">
@@ -89,7 +94,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
                   <span className="product-card__halo" style={{ background: product.imageColor }} />
                   <img
                     className="product-card__jar"
-                    src={foundationJar}
+                    src={productImages[(Number(product.id) - 1) % productImages.length]}
                     alt={`${product.brand} ${product.name}`}
                     draggable={false}
                   />
@@ -152,20 +157,21 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           pointer-events: none;
         }
         .recommendations-screen > .logo {
-          left: auto;
-          right: var(--space-lg);
-          top: 24px;
+          display: none;
         }
         .recommendations-screen__top {
           position: relative;
           z-index: 2;
           display: grid;
-          grid-template-columns: minmax(210px, 23vw) 1fr;
+          grid-template-columns: 1fr minmax(220px, 25vw);
           align-items: start;
-          gap: clamp(36px, 6vw, 100px);
-          padding: 22px var(--space-lg) 0;
+          gap: clamp(30px, 5vw, 84px);
+          padding: 20px var(--space-lg) 0;
         }
         .recommendations-screen__camera-card {
+          width: 100%;
+          max-width: 320px;
+          justify-self: end;
           padding: 8px;
           border-radius: 25px;
           background: rgba(255, 255, 255, 0.2);
@@ -176,7 +182,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         .recommendations-screen__camera {
           position: relative;
-          height: clamp(88px, 10vh, 116px);
+          height: clamp(94px, 11vh, 124px);
           overflow: hidden;
           border-radius: 18px;
           background: linear-gradient(135deg, #d6a6bb, #8d79ae);
@@ -195,7 +201,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .recommendations-screen__header {
           align-self: center;
           text-align: left;
-          padding-top: 18px;
+          padding-top: 10px;
         }
         .recommendations-screen__eyebrow {
           display: block;
@@ -218,7 +224,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         .recommendations-screen__profile {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
           gap: 7px;
           padding-top: 7px;
         }
@@ -227,6 +233,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           flex-direction: column;
           gap: 1px;
           padding: 8px 10px;
+          min-width: 0;
           border-radius: 14px;
           background: rgba(255,255,255,.2);
           border: 1px solid rgba(255,255,255,.48);
@@ -238,11 +245,14 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           letter-spacing: 0.1em;
         }
         .recommendations-screen__profile-item strong {
-          font-size: 14px;
+          font-size: 13px;
+          line-height: 1.15;
+          overflow-wrap: anywhere;
         }
         .recommendations-screen__profile-item > span:last-child {
           font-size: 8px;
           color: rgba(20,20,20,.48);
+          overflow-wrap: anywhere;
         }
         .recommendations-screen__carousel {
           flex: 1;
@@ -251,8 +261,9 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           position: relative;
           z-index: 2;
           min-height: 0;
-          padding: 0 var(--space-md);
+          padding: 34px var(--space-md) 0;
           overflow: visible;
+          transform: translateY(20px);
         }
         .product-card {
           height: clamp(330px, 43vh, 410px);
@@ -325,19 +336,19 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .product-card__jar {
           position: absolute;
           z-index: 2;
-          width: 280px;
-          height: 280px;
+          width: 330px;
+          height: 330px;
           object-fit: contain;
           left: 50%;
-          top: -104px;
+          top: -82px;
           transform: translateX(-50%) rotate(4deg);
           filter: drop-shadow(0 24px 18px rgba(42, 22, 48, .28));
           pointer-events: none;
         }
         .product-card--center .product-card__jar {
-          width: 320px;
-          height: 320px;
-          top: -138px;
+          width: 380px;
+          height: 380px;
+          top: -104px;
         }
         .product-card__details {
           position: relative;
@@ -408,8 +419,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: rgba(255,255,255,.54);
-          backdrop-filter: blur(12px);
+          background: transparent;
         }
         .product-card__pie strong {
           font-size: 17px;
@@ -426,8 +436,10 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           position: absolute;
           z-index: 5;
           right: 18px;
+          left: 50%;
           bottom: 14px;
           width: 420px;
+          margin-left: -210px;
         }
         .recommendations-screen__restart .slide-to-scan {
           padding: 0;
@@ -437,8 +449,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           margin-top: 6px;
         }
         .recommendations-screen .podium-carousel__track {
-          padding-top: 105px;
-          margin-top: -90px;
+          padding-top: 125px;
+          margin-top: -105px;
         }
         @media (max-height: 720px) {
           .recommendations-screen__camera {

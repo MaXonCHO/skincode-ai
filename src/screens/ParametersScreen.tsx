@@ -68,8 +68,8 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                 items={undertoneOptions}
                 selectedIndex={undertoneIndex}
                 onSelect={setUndertoneIndex}
-                cardWidth={150}
-                cardGap={16}
+                cardWidth={205}
+                cardGap={22}
                 renderCard={(item, isCenter) => (
                   <div className={`option-card ${isCenter ? 'option-card--center' : ''}`}>
                     <div className="option-card__image-frame">
@@ -81,9 +81,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                       />
                     </div>
                     <span className="option-card__label">{item.label}</span>
-                    {isCenter && (
-                      <span className="option-card__desc">{item.description}</span>
-                    )}
+                    <span className="option-card__desc">{item.description}</span>
                   </div>
                 )}
               />
@@ -111,8 +109,8 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                 items={skinTypeOptions}
                 selectedIndex={skinTypeIndex}
                 onSelect={setSkinTypeIndex}
-                cardWidth={150}
-                cardGap={16}
+                cardWidth={205}
+                cardGap={22}
                 renderCard={(item, isCenter) => (
                   <div className={`option-card ${isCenter ? 'option-card--center' : ''}`}>
                     <div className="option-card__image-frame">
@@ -124,9 +122,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                       />
                     </div>
                     <span className="option-card__label">{item.label}</span>
-                    {isCenter && (
-                      <span className="option-card__desc">{item.description}</span>
-                    )}
+                    <span className="option-card__desc">{item.description}</span>
                   </div>
                 )}
               />
@@ -201,15 +197,9 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           bottom: var(--space-md);
           left: 50%;
           transform: translateX(-50%);
-          width: min(92vw, 640px);
-          background: rgba(255, 255, 255, 0.28);
-          backdrop-filter: blur(28px) saturate(150%);
-          -webkit-backdrop-filter: blur(28px) saturate(150%);
-          border: 1px solid rgba(255, 255, 255, 0.58);
-          border-radius: 20px;
-          padding: clamp(16px, 2vw, 24px) clamp(20px, 2.5vw, 32px);
+          width: min(96vw, 980px);
+          padding: 0;
           z-index: 15;
-          box-shadow: 0 18px 48px rgba(35, 28, 48, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.85);
         }
         .parameters-screen__step {
           display: flex;
@@ -217,7 +207,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           align-items: center;
         }
         .parameters-screen__title {
-          font-size: clamp(15px, 1.4vw, 18px);
+          font-size: clamp(18px, 1.7vw, 24px);
           font-weight: 600;
           text-align: center;
           margin-bottom: 12px;
@@ -242,12 +232,12 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           flex: 0 1 auto;
         }
         .option-card {
-          height: 178px;
+          height: 242px;
           background: linear-gradient(145deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.16));
           backdrop-filter: blur(18px) saturate(145%);
           -webkit-backdrop-filter: blur(18px) saturate(145%);
           border-radius: 18px;
-          padding: 10px 10px 12px;
+          padding: 12px 12px 15px;
           text-align: center;
           border: 1px solid rgba(255, 255, 255, 0.56);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 28px rgba(38, 28, 48, 0.1);
@@ -259,8 +249,8 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         }
         .option-card__image-frame {
           width: 100%;
-          height: 104px;
-          margin: 0 auto 9px;
+          height: 154px;
+          margin: 0 auto 11px;
           overflow: hidden;
           border-radius: 13px;
           background: rgba(255, 255, 255, 0.18);
@@ -282,14 +272,14 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         }
         .option-card__label {
           display: block;
-          font-size: 15px;
+          font-size: 17px;
           font-weight: 600;
           color: #000;
           margin-bottom: 2px;
         }
         .option-card__desc {
           display: block;
-          font-size: 11px;
+          font-size: 12px;
           color: #666;
           line-height: 1.35;
         }
