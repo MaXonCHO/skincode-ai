@@ -408,8 +408,20 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           border-radius: 50%;
           display: grid;
           place-items: center;
-          background: conic-gradient(from 210deg, #ff7b58, #ee80c7, #9770e6, #72d39d var(--score), rgba(255,255,255,.38) 0);
+          position: relative;
+          background: transparent;
           box-shadow: 0 9px 22px rgba(59,35,70,.16);
+        }
+        .product-card__pie::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          padding: 7px;
+          background: conic-gradient(from 210deg, #ff7b58, #ee80c7, #9770e6, #72d39d var(--score), rgba(255,255,255,.38) 0);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
         }
         .product-card__pie > div {
           width: 59px;
@@ -420,6 +432,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           align-items: center;
           justify-content: center;
           background: transparent;
+          position: relative;
+          z-index: 1;
         }
         .product-card__pie strong {
           font-size: 17px;

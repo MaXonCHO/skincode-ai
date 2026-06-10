@@ -119,8 +119,8 @@ export function SlideToScan({
           cursor: grab;
           touch-action: none;
           background: rgba(255, 255, 255, 0.28);
-          border-color: rgba(255, 255, 255, 0.58);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 16px 38px rgba(25,18,30,.14);
+          border: 0;
+          box-shadow: 0 16px 38px rgba(25,18,30,.14);
         }
         .slide-to-scan__fill {
           position: absolute;

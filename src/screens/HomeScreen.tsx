@@ -24,6 +24,8 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
               alt="Чистая кожа"
               className="home-screen__image"
             />
+            <span className="home-screen__image-corner home-screen__image-corner--left" />
+            <span className="home-screen__image-corner home-screen__image-corner--right" />
             <div className="home-screen__image-glow" />
           </div>
         </motion.div>
@@ -61,8 +63,8 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: var(--space-xl);
-          padding: var(--space-lg) var(--space-xl);
+          gap: clamp(54px, 7vw, 130px);
+          padding: var(--space-lg) clamp(54px, 7vw, 130px);
         }
         .home-screen__visual {
           position: relative;
@@ -70,16 +72,32 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
         }
         .home-screen__image-wrapper {
           position: relative;
-          width: clamp(280px, 28vw, 480px);
-          height: clamp(340px, 34vw, 580px);
-          border-radius: 240px 240px 200px 200px / 280px 280px 200px 200px;
-          overflow: hidden;
+          width: clamp(360px, 34vw, 590px);
+          height: clamp(500px, 48vw, 770px);
         }
         .home-screen__image {
           width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: center top;
+        }
+        .home-screen__image-corner {
+          position: absolute;
+          bottom: 0;
+          width: 68px;
+          height: 68px;
+          border-bottom: 3px solid rgba(0,0,0,.72);
+          pointer-events: none;
+        }
+        .home-screen__image-corner--left {
+          left: 0;
+          border-left: 3px solid rgba(0,0,0,.72);
+          border-radius: 0 0 0 18px;
+        }
+        .home-screen__image-corner--right {
+          right: 0;
+          border-right: 3px solid rgba(0,0,0,.72);
+          border-radius: 0 0 18px 0;
         }
         .home-screen__image-glow {
           position: absolute;
@@ -90,10 +108,11 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           filter: blur(30px);
         }
         .home-screen__text {
-          max-width: clamp(320px, 40vw, 560px);
+          max-width: clamp(420px, 43vw, 720px);
+          text-align: left;
         }
         .home-screen__title {
-          font-size: var(--font-xl);
+          font-size: clamp(52px, 5.4vw, 88px);
           font-weight: 700;
           line-height: 1.1;
           letter-spacing: 0.04em;
@@ -101,17 +120,19 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           color: #000;
         }
         .home-screen__subtitle {
-          font-size: var(--font-md);
+          max-width: 650px;
+          font-size: clamp(20px, 1.9vw, 30px);
           line-height: 1.6;
           color: var(--text-secondary);
           margin-bottom: 48px;
           font-weight: 400;
         }
         .home-screen__cta {
-          font-size: clamp(16px, 1.5vw, 20px);
+          display: block;
+          font-size: clamp(17px, 1.6vw, 22px);
         }
 
-        @media (max-width: 900px), (max-height: 600px) {
+        @media (orientation: portrait), (max-width: 900px) {
           .home-screen__content {
             flex-direction: column;
             gap: var(--space-md);
