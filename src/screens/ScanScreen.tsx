@@ -5,6 +5,7 @@ import { FaceOverlay } from '../components/FaceOverlay'
 import { SlideToScan } from '../components/SlideToScan'
 import { AnalysisProgress } from '../components/AnalysisProgress'
 import { useCameraStream } from '../hooks/useCameraStream'
+import { useFaceDetection } from '../hooks/useFaceDetection'
 
 interface ScanScreenProps {
   onComplete: () => void
@@ -14,6 +15,12 @@ type ScanPhase = 'preview' | 'scanning' | 'analyzing'
 
 export function ScanScreen({ onComplete }: ScanScreenProps) {
   const { videoRef, hasCamera, error: cameraError } = useCameraStream(true)
+  const {
+    faceBox,
+    faceDetected,
+    ready: detectionReady,
+    error: detectionError,
+  } = useFaceDetection(videoRef, hasCamera)
   const [phase, setPhase] = useState<ScanPhase>('preview')
   const [analysisStep, setAnalysisStep] = useState(0)
 
@@ -56,6 +63,8 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
         <FaceOverlay
           scanning={phase === 'scanning' || phase === 'analyzing'}
           showLandmarks={phase !== 'preview'}
+          faceBox={faceBox}
+          detected={faceDetected}
         />
       </div>
 
@@ -63,7 +72,13 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
 
       <div className="scan-screen__header">
         <h2 className="scan-screen__title">Сканирование кожи</h2>
-        <p className="scan-screen__hint">Расположите лицо в центре рамки</p>
+        <p className="scan-screen__hint">
+          {faceDetected
+            ? 'Лицо найдено — можно начинать сканирование'
+            : detectionReady
+              ? 'Расположите лицо перед камерой'
+              : 'Подготавливаем распознавание лица'}
+        </p>
       </div>
 
       <AnimatePresence>
@@ -87,7 +102,10 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
             >
-              <SlideToScan onComplete={handleScanStart} />
+              <SlideToScan
+                onComplete={handleScanStart}
+                disabled={detectionReady && !faceDetected}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -95,6 +113,9 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
 
       {cameraError && (
         <p className="scan-screen__error">Камера недоступна — демо-режим</p>
+      )}
+      {detectionError && !cameraError && (
+        <p className="scan-screen__detection-note">Распознавание недоступно — сканирование можно продолжить</p>
       )}
 
       <style>{`
@@ -179,6 +200,18 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           font-size: var(--font-md);
           color: rgba(255, 255, 255, 0.7);
           z-index: 12;
+        }
+        .scan-screen__detection-note {
+          position: absolute;
+          top: var(--space-md);
+          right: var(--space-md);
+          z-index: 16;
+          padding: 8px 14px;
+          border-radius: 20px;
+          background: rgba(255,255,255,.22);
+          color: rgba(255,255,255,.8);
+          font-size: 11px;
+          backdrop-filter: blur(18px);
         }
       `}</style>
     </div>

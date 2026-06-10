@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
+import type { FaceBox } from '../hooks/useFaceDetection'
 
 interface FaceOverlayProps {
   scanning?: boolean
   showLandmarks?: boolean
+  faceBox?: FaceBox | null
+  detected?: boolean
 }
 
 const LANDMARKS = [
@@ -14,17 +17,34 @@ const LANDMARKS = [
   { x: 75, y: 62 },
 ]
 
-export function FaceOverlay({ scanning = false, showLandmarks = true }: FaceOverlayProps) {
+export function FaceOverlay({
+  scanning = false,
+  showLandmarks = true,
+  faceBox,
+  detected = false,
+}: FaceOverlayProps) {
+  const frame = faceBox
+    ? {
+        left: `${faceBox.left}%`,
+        top: `${faceBox.top}%`,
+        width: `${faceBox.width}%`,
+        height: `${faceBox.height}%`,
+      }
+    : { left: '22.5%', top: '14%', width: '55%', height: '72%' }
+
   return (
-    <div className="face-overlay">
+    <div className={`face-overlay ${detected ? 'face-overlay--detected' : ''}`}>
       <motion.div
         className="face-overlay__frame"
-        animate={scanning ? { boxShadow: [
-          '0 0 0 2px rgba(184,160,224,0.6), 0 0 40px rgba(184,160,224,0.3)',
-          '0 0 0 2px rgba(224,160,200,0.8), 0 0 60px rgba(224,160,200,0.5)',
-          '0 0 0 2px rgba(160,200,232,0.6), 0 0 40px rgba(160,200,232,0.3)',
-        ] } : {}}
-        transition={{ duration: 2, repeat: scanning ? Infinity : 0 }}
+        animate={{
+          ...frame,
+          boxShadow: scanning ? [
+            '0 0 0 2px rgba(184,160,224,0.6), 0 0 40px rgba(184,160,224,0.3)',
+            '0 0 0 2px rgba(224,160,200,0.8), 0 0 60px rgba(224,160,200,0.5)',
+            '0 0 0 2px rgba(160,200,232,0.6), 0 0 40px rgba(160,200,232,0.3)',
+          ] : detected ? '0 0 0 2px rgba(126,236,190,.72), 0 0 42px rgba(126,236,190,.3)' : '0 0 0 1px rgba(255,255,255,.16)',
+        }}
+        transition={{ duration: scanning ? 2 : 0.3, repeat: scanning ? Infinity : 0 }}
       >
         <div className="face-overlay__corner face-overlay__corner--tl" />
         <div className="face-overlay__corner face-overlay__corner--tr" />
@@ -80,16 +100,14 @@ export function FaceOverlay({ scanning = false, showLandmarks = true }: FaceOver
         .face-overlay {
           position: absolute;
           inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           pointer-events: none;
         }
         .face-overlay__frame {
-          position: relative;
-          width: 55%;
-          height: 72%;
+          position: absolute;
           border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+        }
+        .face-overlay--detected .face-overlay__corner {
+          border-color: rgba(126, 236, 190, .92);
         }
         .face-overlay__corner {
           position: absolute;
