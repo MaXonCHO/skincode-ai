@@ -61,7 +61,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             >
               <h3 className="parameters-screen__title">Выберите свой подтон</h3>
               <PodiumCarousel
@@ -104,7 +104,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             >
               <h3 className="parameters-screen__title">Выберите тип кожи</h3>
               <PodiumCarousel
@@ -202,10 +202,10 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           left: 50%;
           transform: translateX(-50%);
           width: min(92vw, 640px);
-          background: rgba(255, 255, 255, 0.68);
+          background: rgba(255, 255, 255, 0.28);
           backdrop-filter: blur(28px) saturate(150%);
           -webkit-backdrop-filter: blur(28px) saturate(150%);
-          border: 1px solid rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.58);
           border-radius: 20px;
           padding: clamp(16px, 2vw, 24px) clamp(20px, 2.5vw, 32px);
           z-index: 15;
@@ -243,13 +243,13 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         }
         .option-card {
           height: 178px;
-          background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4));
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.16));
           backdrop-filter: blur(18px) saturate(145%);
           -webkit-backdrop-filter: blur(18px) saturate(145%);
           border-radius: 18px;
           padding: 10px 10px 12px;
           text-align: center;
-          border: 1px solid rgba(255, 255, 255, 0.82);
+          border: 1px solid rgba(255, 255, 255, 0.56);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 28px rgba(38, 28, 48, 0.1);
           transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
@@ -263,7 +263,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           margin: 0 auto 9px;
           overflow: hidden;
           border-radius: 13px;
-          background: rgba(255, 255, 255, 0.38);
+          background: rgba(255, 255, 255, 0.18);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(255, 255, 255, 0.78);

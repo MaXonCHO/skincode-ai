@@ -1,5 +1,31 @@
 import { products } from '../data/products'
-import type { ScoredProduct, SkinProfile } from '../types'
+import type { Coverage, Finish, ScoredProduct, SkinProfile, SkinType, Undertone } from '../types'
+
+const displayLabels = {
+  Warm: 'Тёплый',
+  Cool: 'Холодный',
+  Neutral: 'Нейтральный',
+  Olive: 'Оливковый',
+  Dry: 'Сухая',
+  Normal: 'Нормальная',
+  Oily: 'Жирная',
+  Combination: 'Комбинированная',
+  Light: 'Лёгкое покрытие',
+  Medium: 'Среднее покрытие',
+  Full: 'Плотное покрытие',
+  Matte: 'Матовый финиш',
+  Natural: 'Натуральный финиш',
+  Dewy: 'Сияющий финиш',
+  Satin: 'Сатиновый финиш',
+} satisfies Record<Undertone | SkinType | Coverage | Finish, string>
+
+export function formatProfileValue(value: Undertone | SkinType): string {
+  return displayLabels[value]
+}
+
+export function formatProductTag(value: Coverage | Finish): string {
+  return displayLabels[value]
+}
 
 export function getRecommendations(profile: SkinProfile): ScoredProduct[] {
   return products

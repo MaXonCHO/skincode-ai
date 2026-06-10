@@ -25,15 +25,6 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
             />
             <div className="home-screen__image-glow" />
           </div>
-          <motion.div
-            className="home-screen__ai-badge glass"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <span className="home-screen__ai-dot" />
-            AI Powered
-          </motion.div>
         </motion.div>
 
         <motion.div
@@ -96,31 +87,6 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           background: rgba(0, 0, 0, 0.06);
           z-index: -1;
           filter: blur(30px);
-        }
-        .home-screen__ai-badge {
-          position: absolute;
-          bottom: 40px;
-          right: -20px;
-          padding: 12px 24px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 15px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: var(--text-secondary);
-        }
-        .home-screen__ai-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: #000;
-          animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.2); }
         }
         .home-screen__text {
           max-width: clamp(320px, 40vw, 560px);

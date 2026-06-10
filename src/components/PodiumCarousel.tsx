@@ -86,7 +86,7 @@ export function PodiumCarousel<T>({
         <motion.div
           className="podium-carousel__inner"
           animate={{ x: centerOffset }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          transition={{ type: 'spring', stiffness: 170, damping: 26, mass: 0.9 }}
         >
           {items.map((item, index) => {
             const distance = Math.abs(index - selectedIndex)
@@ -101,7 +101,7 @@ export function PodiumCarousel<T>({
                 className="podium-carousel__item"
                 style={{ width: cardWidth, marginRight: cardGap }}
                 animate={{ scale, opacity, y: translateY }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 170, damping: 26, mass: 0.9 }}
                 onClick={() => onSelect(index)}
               >
                 {renderCard(item, isCenter)}
@@ -125,11 +125,11 @@ export function PodiumCarousel<T>({
       <style>{`
         .podium-carousel {
           width: 100%;
-          overflow: hidden;
+          overflow: visible;
           touch-action: pan-y;
         }
         .podium-carousel__track {
-          overflow: hidden;
+          overflow: visible;
           padding: 12px 0 4px;
         }
         .podium-carousel__inner {

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 
 const STEPS = [
-  { key: 'tone', label: 'Skin tone' },
-  { key: 'undertone', label: 'Undertone' },
-  { key: 'texture', label: 'Texture' },
-  { key: 'type', label: 'Skin type' },
+  { key: 'tone', label: 'Тон кожи' },
+  { key: 'undertone', label: 'Подтон' },
+  { key: 'texture', label: 'Текстура' },
+  { key: 'type', label: 'Тип кожи' },
 ]
 
 interface AnalysisProgressProps {
@@ -23,7 +23,7 @@ export function AnalysisProgress({ currentStep }: AnalysisProgressProps) {
             className={`analysis-progress__item ${done ? 'analysis-progress__item--done' : ''} ${active ? 'analysis-progress__item--active' : ''}`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ duration: 0.55, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="analysis-progress__check">
               {done ? '✓' : active ? '◉' : '○'}

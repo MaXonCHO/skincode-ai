@@ -6,7 +6,7 @@ export function Logo({ variant = 'default' }: LogoProps) {
   return (
     <img
       src="/logo.png"
-      alt="SkinCode AI"
+      alt="SkinCode"
       className={`logo ${variant === 'light' ? 'logo--light' : ''}`}
     />
   )

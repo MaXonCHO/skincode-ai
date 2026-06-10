@@ -62,7 +62,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
       <Logo variant="light" />
 
       <div className="scan-screen__header">
-        <h2 className="scan-screen__title">AI-сканирование</h2>
+        <h2 className="scan-screen__title">Сканирование кожи</h2>
         <p className="scan-screen__hint">Расположите лицо в центре рамки</p>
       </div>
 

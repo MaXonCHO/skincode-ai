@@ -4,9 +4,16 @@ import { motion } from 'framer-motion'
 interface SlideToScanProps {
   onComplete: () => void
   disabled?: boolean
+  label?: string
+  completedLabel?: string
 }
 
-export function SlideToScan({ onComplete, disabled = false }: SlideToScanProps) {
+export function SlideToScan({
+  onComplete,
+  disabled = false,
+  label = 'Проведите для сканирования →',
+  completedLabel = 'Сканирование...',
+}: SlideToScanProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
   const [completed, setCompleted] = useState(false)
@@ -81,13 +88,13 @@ export function SlideToScan({ onComplete, disabled = false }: SlideToScanProps) 
           animate={{ opacity: progress > 0.1 ? 1 : 0 }}
         />
         <span className="slide-to-scan__label">
-          {completed ? 'Сканирование...' : 'Проведите для сканирования →'}
+          {completed ? completedLabel : label}
         </span>
         <motion.div
           className="slide-to-scan__thumb"
           style={{ width: THUMB_SIZE, height: THUMB_SIZE }}
           animate={{ x: thumbX }}
-          transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+          transition={{ type: 'spring', stiffness: 240, damping: 32, mass: 0.9 }}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path d="M5 12h14M13 6l6 6-6 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -111,6 +118,9 @@ export function SlideToScan({ onComplete, disabled = false }: SlideToScanProps) 
           overflow: hidden;
           cursor: grab;
           touch-action: none;
+          background: rgba(255, 255, 255, 0.28);
+          border-color: rgba(255, 255, 255, 0.58);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 16px 38px rgba(25,18,30,.14);
         }
         .slide-to-scan__fill {
           position: absolute;
