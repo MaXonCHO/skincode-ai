@@ -68,6 +68,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                 items={undertoneOptions}
                 selectedIndex={undertoneIndex}
                 onSelect={setUndertoneIndex}
+                getItemLabel={(item) => item.label}
                 cardWidth={205}
                 cardGap={22}
                 renderCard={(item, isCenter) => (
@@ -109,6 +110,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
                 items={skinTypeOptions}
                 selectedIndex={skinTypeIndex}
                 onSelect={setSkinTypeIndex}
+                getItemLabel={(item) => item.label}
                 cardWidth={205}
                 cardGap={22}
                 renderCard={(item, isCenter) => (

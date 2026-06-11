@@ -13,7 +13,7 @@ interface AnalysisProgressProps {
 
 export function AnalysisProgress({ currentStep }: AnalysisProgressProps) {
   return (
-    <div className="analysis-progress glass">
+    <div className="analysis-progress glass" role="status" aria-live="polite">
       {STEPS.map((step, index) => {
         const done = index < currentStep
         const active = index === currentStep

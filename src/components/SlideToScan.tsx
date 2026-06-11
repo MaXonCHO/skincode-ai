@@ -74,6 +74,10 @@ export function SlideToScan({
       <div
         ref={trackRef}
         className="slide-to-scan__track glass"
+        role="button"
+        tabIndex={disabled || completed ? -1 : 0}
+        aria-label={label}
+        aria-disabled={disabled || completed}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={onEnd}
@@ -81,6 +85,14 @@ export function SlideToScan({
         onMouseMove={handleMouseMove}
         onMouseUp={onEnd}
         onMouseLeave={onEnd}
+        onKeyDown={(event) => {
+          if ((event.key === 'Enter' || event.key === ' ') && !disabled && !completed) {
+            event.preventDefault()
+            setCompleted(true)
+            setProgress(1)
+            onComplete()
+          }
+        }}
       >
         <motion.div
           className="slide-to-scan__fill"

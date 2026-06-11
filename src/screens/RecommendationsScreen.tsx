@@ -79,6 +79,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           items={products}
           selectedIndex={selectedIndex}
           onSelect={setSelectedIndex}
+          getItemLabel={(product) => `${product.brand} ${product.name}`}
           cardWidth={430}
           cardGap={36}
           renderCard={(product, isCenter) => (
@@ -110,7 +111,11 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
                     <span>{formatProductTag(product.finish)}</span>
                   </div>
                 </div>
-                <div className="product-card__score">
+                <div
+                  className="product-card__score"
+                  role="img"
+                  aria-label={`Совпадение тона ${product.matchScore} процентов`}
+                >
                   <div
                     className="product-card__pie"
                     style={{ '--score': `${product.matchScore * 3.6}deg` } as React.CSSProperties}
@@ -206,7 +211,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .recommendations-screen__eyebrow {
           display: block;
           margin-bottom: 10px;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 700;
           letter-spacing: .13em;
           text-transform: uppercase;
@@ -239,7 +244,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           border: 1px solid rgba(255,255,255,.48);
         }
         .recommendations-screen__profile-label {
-          font-size: 8px;
+          font-size: 10px;
           color: rgba(20,20,20,.52);
           text-transform: uppercase;
           letter-spacing: 0.1em;
@@ -250,7 +255,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           overflow-wrap: anywhere;
         }
         .recommendations-screen__profile-item > span:last-child {
-          font-size: 8px;
+          font-size: 10px;
           color: rgba(20,20,20,.48);
           overflow-wrap: anywhere;
         }
@@ -297,7 +302,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           z-index: 3;
         }
         .product-card__brand {
-          font-size: 10px;
+          font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 0.12em;
           color: rgba(20,20,20,.5);
@@ -370,7 +375,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         .product-card__description > span,
         .product-card__score > span {
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 700;
           letter-spacing: .1em;
           text-transform: uppercase;
@@ -387,7 +392,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           gap: 5px;
         }
         .product-card__tags span {
-          font-size: 8px;
+          font-size: 10px;
           padding: 4px 7px;
           border-radius: 20px;
           background: rgba(255,255,255,.26);
@@ -441,7 +446,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         .product-card__pie span {
           margin-top: 2px;
-          font-size: 7px;
+          font-size: 9px;
           text-transform: uppercase;
           letter-spacing: .08em;
           color: rgba(20,20,20,.5);

@@ -6,6 +6,7 @@ interface PodiumCarouselProps<T> {
   selectedIndex: number
   onSelect: (index: number) => void
   renderCard: (item: T, isCenter: boolean) => React.ReactNode
+  getItemLabel?: (item: T) => string
   cardWidth?: number
   cardGap?: number
 }
@@ -15,6 +16,7 @@ export function PodiumCarousel<T>({
   selectedIndex,
   onSelect,
   renderCard,
+  getItemLabel,
   cardWidth = 220,
   cardGap = 24,
 }: PodiumCarouselProps<T>) {
@@ -96,16 +98,19 @@ export function PodiumCarousel<T>({
             const translateY = isCenter ? 0 : distance === 1 ? 8 : 16
 
             return (
-              <motion.div
+              <motion.button
                 key={index}
+                type="button"
                 className="podium-carousel__item"
                 style={{ width: cardWidth, marginRight: cardGap }}
                 animate={{ scale, opacity, y: translateY }}
                 transition={{ type: 'spring', stiffness: 170, damping: 26, mass: 0.9 }}
                 onClick={() => onSelect(index)}
+                aria-label={`Выбрать ${getItemLabel?.(item) ?? `вариант ${index + 1}`}`}
+                aria-pressed={isCenter}
               >
                 {renderCard(item, isCenter)}
-              </motion.div>
+              </motion.button>
             )
           })}
         </motion.div>
@@ -118,6 +123,7 @@ export function PodiumCarousel<T>({
             className={`podium-carousel__dot ${index === selectedIndex ? 'podium-carousel__dot--active' : ''}`}
             onClick={() => onSelect(index)}
             aria-label={`Выбрать ${index + 1}`}
+            aria-pressed={index === selectedIndex}
           />
         ))}
       </div>
@@ -141,25 +147,42 @@ export function PodiumCarousel<T>({
           flex-shrink: 0;
           cursor: pointer;
           transform-origin: bottom center;
+          border: 0;
+          padding: 0;
+          background: transparent;
+          color: inherit;
+          font: inherit;
+          text-align: inherit;
         }
         .podium-carousel__dots {
           display: flex;
           justify-content: center;
           gap: 8px;
-          margin-top: 12px;
+          margin-top: 4px;
         }
         .podium-carousel__dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          border: 1px solid var(--border-color, #000);
+          position: relative;
+          width: 44px;
+          height: 44px;
+          border: 0;
           background: transparent;
           cursor: pointer;
           padding: 0;
-          transition: all 0.3s ease;
         }
-        .podium-carousel__dot--active {
-          background: #000;
+        .podium-carousel__dot::before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          border: 1px solid var(--border-color);
+          transform: translate(-50%, -50%);
+          transition: width var(--motion-fast) ease, border-radius var(--motion-fast) ease, background var(--motion-fast) ease;
+        }
+        .podium-carousel__dot--active::before {
+          background: var(--color-primary);
           width: 24px;
           border-radius: 4px;
         }

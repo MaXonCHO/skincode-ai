@@ -7,14 +7,24 @@
 }
 
 :root {
+  --color-primary: #831843;
+  --color-secondary: #ec4899;
+  --color-accent: #7542c6;
+  --color-background: #fdf2f8;
+  --color-foreground: #321126;
+  --color-muted: #765c6e;
+  --color-focus: #7542c6;
   --bg-white: #ffffff;
-  --bg-soft: #f5f5f5;
-  --text-primary: #000000;
-  --text-secondary: #666666;
-  --border-color: #000000;
-  --border-light: #e0e0e0;
+  --bg-soft: var(--color-background);
+  --text-primary: var(--color-foreground);
+  --text-secondary: var(--color-muted);
+  --border-color: var(--color-primary);
+  --border-light: rgba(131, 24, 67, 0.16);
   --glass-bg: rgba(255, 255, 255, 0.3);
   --glass-border: rgba(255, 255, 255, 0.62);
+  --shadow-soft: 0 16px 42px rgba(83, 38, 73, 0.14);
+  --motion-fast: 220ms;
+  --motion-smooth: 500ms;
   --space-sm: clamp(12px, 1.5vw, 24px);
   --space-md: clamp(24px, 3vw, 48px);
   --space-lg: clamp(40px, 5vw, 80px);
@@ -40,6 +50,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  overscroll-behavior: none;
 }
 
 .app-container {
@@ -48,7 +59,7 @@ body {
   height: 100dvh;
   position: relative;
   overflow: hidden;
-  background: var(--bg-white);
+  background: var(--color-background);
 }
 
 .app-frame {
@@ -56,7 +67,7 @@ body {
   height: 100%;
   position: relative;
   overflow: hidden;
-  background: var(--bg-white);
+  background: var(--color-background);
 }
 
 .screen {
@@ -68,7 +79,10 @@ body {
 }
 
 .beauty-gradient {
-  background: var(--bg-white);
+  background:
+    radial-gradient(circle at 16% 12%, rgba(249, 168, 212, .28), transparent 32%),
+    radial-gradient(circle at 88% 82%, rgba(139, 92, 246, .14), transparent 34%),
+    var(--color-background);
 }
 
 .glass {
@@ -77,30 +91,31 @@ body {
   -webkit-backdrop-filter: blur(28px) saturate(150%);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 16px 42px rgba(40,30,50,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), var(--shadow-soft);
 }
 
 .glow-button,
 .btn-primary {
   position: relative;
-  border: 1px solid var(--border-color);
+  border: 0;
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
-  background: #000;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   border-radius: 60px;
   padding: clamp(14px, 1.6vw, 22px) clamp(40px, 5vw, 64px);
   font-size: clamp(14px, 1.3vw, 18px);
-  transition: transform 0.45s cubic-bezier(.22,1,.36,1), background 0.45s ease;
+  box-shadow: 0 14px 30px rgba(117, 66, 198, .22);
+  transition: transform var(--motion-fast) cubic-bezier(.22,1,.36,1), filter var(--motion-fast) ease;
 }
 
 .glow-button:hover,
 .btn-primary:hover {
   transform: scale(1.02);
-  background: #222;
+  filter: brightness(1.08);
 }
 
 .glow-button:active,
@@ -122,7 +137,7 @@ body {
   border-radius: 60px;
   padding: clamp(14px, 1.6vw, 22px) clamp(32px, 4vw, 48px);
   font-size: clamp(14px, 1.3vw, 18px);
-  transition: transform 0.45s cubic-bezier(.22,1,.36,1), background 0.45s ease;
+  transition: transform var(--motion-fast) cubic-bezier(.22,1,.36,1), background var(--motion-fast) ease;
 }
 
 .btn-secondary:hover {
@@ -145,4 +160,33 @@ body {
 
 .logo--light {
   filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+}
+
+h1,
+h2,
+.home-screen__title,
+.recommendations-screen__title {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+button,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

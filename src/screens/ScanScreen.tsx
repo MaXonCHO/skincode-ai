@@ -106,7 +106,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
 
       <div className="scan-screen__header">
         <h2 className="scan-screen__title">Сканирование кожи</h2>
-        <p className="scan-screen__hint">
+        <p className="scan-screen__hint" role="status" aria-live="polite">
           {prompt}
         </p>
       </div>
@@ -129,6 +129,8 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           <motion.div
             key={prompt}
             className={`scan-screen__guidance ${faceCentered ? 'scan-screen__guidance--ready' : ''}`}
+            role="status"
+            aria-live="polite"
             initial={{ opacity: 0, y: 18, scale: .97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: .98 }}
