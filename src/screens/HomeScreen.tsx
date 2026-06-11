@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Logo } from '../components/Logo'
 import { SlideToScan } from '../components/SlideToScan'
-import heroPhoto from '../../photo/hero-photo-2.png'
+import heroPhoto from '../../photo/hero-block-new.png'
 
 interface HomeScreenProps {
   onStart: () => void
@@ -80,7 +80,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center top;
+          object-position: center 38%;
         }
         .home-screen__text {
           align-self: center;
@@ -145,6 +145,9 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
             inset: 0;
             background: linear-gradient(180deg, transparent 32%, rgba(0,0,0,.46) 100%);
             pointer-events: none;
+          }
+          .home-screen__image {
+            object-position: center 32%;
           }
           .home-screen__text {
             position: absolute;

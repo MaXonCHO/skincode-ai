@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 import type { FaceBox } from '../hooks/useFaceDetection'
 
 const STEPS = [
-  { key: 'tone', label: 'Тон кожи', value: 'Равномерный', side: 'left', x: -5, y: .25 },
-  { key: 'undertone', label: 'Подтон', value: 'Нейтральный', side: 'right', x: 5, y: .32 },
-  { key: 'texture', label: 'Текстура', value: 'Гладкая', side: 'left', x: -5, y: .68 },
-  { key: 'type', label: 'Тип кожи', value: 'Комбинированная', side: 'right', x: 5, y: .72 },
+  { key: 'tone', label: 'Тон кожи', value: 'Равномерный', side: 'left', x: .2, y: .25 },
+  { key: 'undertone', label: 'Подтон', value: 'Нейтральный', side: 'right', x: .8, y: .32 },
+  { key: 'texture', label: 'Текстура', value: 'Гладкая', side: 'left', x: .18, y: .68 },
+  { key: 'type', label: 'Тип кожи', value: 'Комбинированная', side: 'right', x: .82, y: .72 },
 ] as const
 
 interface AnalysisProgressProps {
@@ -21,33 +21,46 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
       {STEPS.map((step, index) => {
         if (index > currentStep) return null
 
-        const isLeft = step.side === 'left'
-        const left = isLeft
-          ? clamp(faceBox.left + step.x, 13, 42)
-          : clamp(faceBox.left + faceBox.width + step.x, 58, 87)
+        const left = clamp(faceBox.left + faceBox.width * step.x, 18, 82)
         const top = clamp(faceBox.top + faceBox.height * step.y, 20, 78)
 
         return (
           <motion.div
             key={step.key}
-            className={`analysis-callout analysis-callout--${step.side}`}
-            initial={{ opacity: 0, scale: .82, x: isLeft ? 18 : -18 }}
-            animate={{ left: `${left}%`, top: `${top}%`, opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: .9 }}
+            className="analysis-callout-point"
+            initial={{ opacity: 0 }}
+            animate={{ left: `${left}%`, top: `${top}%`, opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{
               left: { type: 'spring', stiffness: 90, damping: 20, mass: .9 },
               top: { type: 'spring', stiffness: 90, damping: 20, mass: .9 },
-              opacity: { duration: .4 },
-              scale: { type: 'spring', stiffness: 170, damping: 22 },
-              x: { type: 'spring', stiffness: 170, damping: 22 },
+              opacity: { duration: .2 },
             }}
           >
-            <span className="analysis-callout__index">0{index + 1}</span>
-            <span className="analysis-callout__copy">
-              <small>{step.label}</small>
-              <strong>{step.value}</strong>
-            </span>
-            <span className="analysis-callout__anchor" />
+            <motion.span
+              className={`analysis-callout__line analysis-callout__line--${step.side}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <motion.div
+              className={`analysis-callout analysis-callout--${step.side}`}
+              initial={{ opacity: 0, scale: .2 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: .22, type: 'spring', stiffness: 180, damping: 22 }}
+            >
+              <span className="analysis-callout__index">0{index + 1}</span>
+              <span className="analysis-callout__copy">
+                <small>{step.label}</small>
+                <strong>{step.value}</strong>
+              </span>
+            </motion.div>
+            <motion.span
+              className="analysis-callout__anchor"
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.5, 1] }}
+              transition={{ duration: .42 }}
+            />
           </motion.div>
         )
       })}
@@ -58,9 +71,15 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           inset: 0;
           pointer-events: none;
         }
-        .analysis-callout {
+        .analysis-callout-point {
           position: absolute;
           z-index: 4;
+          width: 0;
+          height: 0;
+        }
+        .analysis-callout {
+          position: absolute;
+          top: 0;
           min-width: 150px;
           display: flex;
           align-items: center;
@@ -74,42 +93,41 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           box-shadow: 0 12px 30px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
         }
         .analysis-callout--left {
-          translate: -100% -50%;
+          right: 44px;
+          translate: 0 -50%;
+          transform-origin: right center;
         }
         .analysis-callout--right {
+          left: 44px;
           translate: 0 -50%;
+          transform-origin: left center;
         }
-        .analysis-callout::after {
-          content: '';
+        .analysis-callout__line {
           position: absolute;
-          top: 50%;
+          top: 0;
           width: 44px;
           height: 1px;
           background: linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.92));
         }
-        .analysis-callout--left::after {
-          left: 100%;
+        .analysis-callout__line--left {
+          right: 0;
+          transform-origin: right center;
         }
-        .analysis-callout--right::after {
-          right: 100%;
-          transform: rotate(180deg);
+        .analysis-callout__line--right {
+          left: 0;
+          transform-origin: left center;
         }
         .analysis-callout__anchor {
           position: absolute;
-          top: 50%;
+          left: 0;
+          top: 0;
           width: 7px;
           height: 7px;
           border: 1px solid rgba(255,255,255,.95);
           border-radius: 50%;
           background: transparent;
           box-shadow: 0 0 9px rgba(255,255,255,.66);
-          transform: translateY(-50%);
-        }
-        .analysis-callout--left .analysis-callout__anchor {
-          left: calc(100% + 41px);
-        }
-        .analysis-callout--right .analysis-callout__anchor {
-          right: calc(100% + 41px);
+          margin: -3.5px 0 0 -3.5px;
         }
         .analysis-callout__index {
           font-size: 10px;
