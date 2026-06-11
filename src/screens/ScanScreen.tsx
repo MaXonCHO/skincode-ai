@@ -93,6 +93,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           />
         )}
         <div className="scan-screen__overlay" />
+        <div className="scan-screen__grid" />
         <FaceOverlay
           scanning={phase === 'scanning' || phase === 'analyzing'}
           showLandmarks
@@ -188,7 +189,21 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
         .scan-screen__fallback-gradient {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, #3a3050 0%, #2a2038 50%, #1a1828 100%);
+          background: linear-gradient(180deg, #292929 0%, #151515 50%, #050505 100%);
+        }
+        .scan-screen__grid {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          opacity: .28;
+          background-image:
+            linear-gradient(rgba(255,255,255,.17) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.17) 1px, transparent 1px),
+            linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+          background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+          mask-image: radial-gradient(circle at center, #000 20%, rgba(0,0,0,.65) 58%, transparent 92%);
+          pointer-events: none;
         }
         .scan-screen__header {
           position: absolute;
@@ -248,12 +263,12 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           height: 9px;
           flex: 0 0 auto;
           border-radius: 50%;
-          background: #ffbf7e;
-          box-shadow: 0 0 0 5px rgba(255,191,126,.16);
+          background: #fff;
+          box-shadow: 0 0 0 5px rgba(255,255,255,.14);
         }
         .scan-screen__guidance--ready .scan-screen__guidance-dot {
-          background: #7eecbe;
-          box-shadow: 0 0 0 5px rgba(126,236,190,.17);
+          background: #fff;
+          box-shadow: 0 0 0 5px rgba(255,255,255,.2);
         }
         .scan-screen__hold {
           position: absolute;
@@ -269,7 +284,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           display: block;
           height: 100%;
           border-radius: inherit;
-          background: linear-gradient(90deg, #7eecbe, #d9ffed);
+          background: #fff;
           transition: width .08s linear;
         }
         .scan-screen__error {

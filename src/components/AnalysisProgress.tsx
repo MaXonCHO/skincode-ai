@@ -31,11 +31,16 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           <motion.div
             key={step.key}
             className={`analysis-callout analysis-callout--${step.side}`}
-            style={{ left: `${left}%`, top: `${top}%` }}
             initial={{ opacity: 0, scale: .82, x: isLeft ? 18 : -18 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
+            animate={{ left: `${left}%`, top: `${top}%`, opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: .9 }}
-            transition={{ type: 'spring', stiffness: 210, damping: 24 }}
+            transition={{
+              left: { type: 'spring', stiffness: 90, damping: 20, mass: .9 },
+              top: { type: 'spring', stiffness: 90, damping: 20, mass: .9 },
+              opacity: { duration: .4 },
+              scale: { type: 'spring', stiffness: 170, damping: 22 },
+              x: { type: 'spring', stiffness: 170, damping: 22 },
+            }}
           >
             <span className="analysis-callout__index">0{index + 1}</span>
             <span className="analysis-callout__copy">
@@ -80,7 +85,7 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           top: 50%;
           width: 44px;
           height: 1px;
-          background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(126,236,190,.9));
+          background: linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.92));
         }
         .analysis-callout--left::after {
           left: 100%;
@@ -94,10 +99,10 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           top: 50%;
           width: 7px;
           height: 7px;
-          border: 1px solid rgba(126,236,190,.95);
+          border: 1px solid rgba(255,255,255,.95);
           border-radius: 50%;
           background: transparent;
-          box-shadow: 0 0 9px rgba(126,236,190,.72);
+          box-shadow: 0 0 9px rgba(255,255,255,.66);
           transform: translateY(-50%);
         }
         .analysis-callout--left .analysis-callout__anchor {
@@ -109,7 +114,7 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
         .analysis-callout__index {
           font-size: 10px;
           font-weight: 700;
-          color: rgba(126,236,190,.92);
+          color: rgba(255,255,255,.92);
           letter-spacing: .08em;
         }
         .analysis-callout__copy {

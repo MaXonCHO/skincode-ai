@@ -60,14 +60,14 @@ export function FaceOverlay({
           >
             <defs>
               <radialGradient id="face-mesh-surface" cx="50%" cy="43%" r="62%">
-                <stop offset="0%" stopColor="rgba(255,255,255,.18)" />
-                <stop offset="58%" stopColor="rgba(224,160,200,.12)" />
-                <stop offset="100%" stopColor="rgba(117,66,198,.04)" />
+                <stop offset="0%" stopColor="rgba(255,255,255,.22)" />
+                <stop offset="58%" stopColor="rgba(255,255,255,.1)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,.02)" />
               </radialGradient>
               <linearGradient id="face-mesh-line" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="rgba(126,236,190,.84)" />
-                <stop offset="52%" stopColor="rgba(255,191,126,.82)" />
-                <stop offset="100%" stopColor="rgba(224,160,200,.8)" />
+                <stop offset="0%" stopColor="rgba(255,255,255,.92)" />
+                <stop offset="52%" stopColor="rgba(255,255,255,.64)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,.3)" />
               </linearGradient>
             </defs>
             <ellipse cx="100" cy="120" rx="88" ry="112" fill="url(#face-mesh-surface)" />
@@ -129,6 +129,7 @@ export function FaceOverlay({
         .face-overlay {
           position: absolute;
           inset: 0;
+          z-index: 3;
           pointer-events: none;
         }
         .face-overlay__frame {
@@ -142,7 +143,7 @@ export function FaceOverlay({
           width: 106%;
           height: 106%;
           overflow: visible;
-          filter: drop-shadow(0 0 12px rgba(126,236,190,.22));
+          filter: drop-shadow(0 0 12px rgba(255,255,255,.2));
           transform-style: preserve-3d;
           transform-origin: center;
         }
@@ -151,23 +152,23 @@ export function FaceOverlay({
           width: 5px;
           height: 5px;
           border-radius: 50%;
-          background: rgba(255, 191, 126, .92);
+          background: rgba(255,255,255,.72);
           transform: translate(-50%, -50%);
-          box-shadow: 0 0 9px rgba(255, 174, 112, .66);
+          box-shadow: 0 0 9px rgba(255,255,255,.48);
           transition: background .35s ease, box-shadow .35s ease;
           z-index: 2;
         }
         .face-overlay--centered .face-overlay__landmark {
-          background: rgba(126, 236, 190, .96);
-          box-shadow: 0 0 10px rgba(126, 236, 190, .72);
+          background: #fff;
+          box-shadow: 0 0 10px rgba(255,255,255,.72);
         }
         .face-overlay__scanline {
           position: absolute;
           left: 10%;
           right: 10%;
           height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(184,160,224,0.8), rgba(224,160,200,0.8), transparent);
-          box-shadow: 0 0 20px rgba(184, 160, 224, 0.6);
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+          box-shadow: 0 0 20px rgba(255,255,255,.48);
         }
       `}</style>
     </div>
