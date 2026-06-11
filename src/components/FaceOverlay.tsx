@@ -83,15 +83,15 @@ export function FaceOverlay({
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: rgba(255,255,255,.72);
+          background: rgba(255,255,255,.86);
           transform: translate(-50%, -50%);
-          box-shadow: 0 0 9px rgba(255,255,255,.48);
+          box-shadow: 0 0 9px rgba(205,190,242,.74);
           transition: background .35s ease, box-shadow .35s ease;
           z-index: 2;
         }
         .face-overlay--centered .face-overlay__landmark {
           background: #fff;
-          box-shadow: 0 0 10px rgba(255,255,255,.72);
+          box-shadow: 0 0 12px rgba(205,190,242,.92);
         }
       `}</style>
     </div>

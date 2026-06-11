@@ -85,12 +85,12 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           align-items: center;
           gap: 9px;
           padding: 10px 13px;
-          border: 1px solid rgba(255,255,255,.54);
+          border: 1px solid rgba(255,255,255,.84);
           border-radius: 15px;
-          background: rgba(255,255,255,.26);
-          color: #fff;
+          background: rgba(255,255,255,.52);
+          color: #302c3b;
           backdrop-filter: blur(20px) saturate(150%);
-          box-shadow: 0 12px 30px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.58);
+          box-shadow: 0 14px 36px rgba(87,72,121,.14), inset 0 1px 0 #fff;
         }
         .analysis-callout--left {
           right: 44px;
@@ -107,7 +107,7 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           top: 0;
           width: 44px;
           height: 1px;
-          background: linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.92));
+          background: linear-gradient(90deg, rgba(178,160,218,.3), rgba(255,255,255,.94));
         }
         .analysis-callout__line--left {
           right: 0;
@@ -123,16 +123,16 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
           top: 0;
           width: 7px;
           height: 7px;
-          border: 1px solid rgba(255,255,255,.95);
+          border: 1px solid rgba(154,136,201,.82);
           border-radius: 50%;
           background: transparent;
-          box-shadow: 0 0 9px rgba(255,255,255,.66);
+          box-shadow: 0 0 9px rgba(171,151,218,.58);
           margin: -3.5px 0 0 -3.5px;
         }
         .analysis-callout__index {
           font-size: 10px;
           font-weight: 700;
-          color: rgba(255,255,255,.92);
+          color: rgba(112,94,155,.88);
           letter-spacing: .08em;
         }
         .analysis-callout__copy {
@@ -142,7 +142,7 @@ export function AnalysisProgress({ currentStep, faceBox }: AnalysisProgressProps
         }
         .analysis-callout__copy small {
           font-size: 9px;
-          color: rgba(255,255,255,.68);
+          color: rgba(48,44,59,.58);
           letter-spacing: .1em;
           text-transform: uppercase;
         }
