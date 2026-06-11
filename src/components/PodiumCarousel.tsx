@@ -182,7 +182,8 @@ export function PodiumCarousel<T>({
           transition: width var(--motion-fast) ease, border-radius var(--motion-fast) ease, background var(--motion-fast) ease;
         }
         .podium-carousel__dot--active::before {
-          background: var(--color-primary);
+          background: transparent;
+          border: 2px solid var(--color-primary);
           width: 24px;
           border-radius: 4px;
         }

@@ -109,7 +109,7 @@ export function SlideToScan({
           transition={{ type: 'spring', stiffness: 240, damping: 32, mass: 0.9 }}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </motion.div>
       </div>
@@ -130,8 +130,8 @@ export function SlideToScan({
           overflow: hidden;
           cursor: grab;
           touch-action: none;
-          background: rgba(255, 255, 255, 0.28);
-          border: 0;
+          background: transparent;
+          border: 2px solid var(--color-primary);
           box-shadow: 0 16px 38px rgba(25,18,30,.14);
         }
         .slide-to-scan__fill {
@@ -140,7 +140,7 @@ export function SlideToScan({
           top: 4px;
           bottom: 4px;
           border-radius: 40px;
-          background: rgba(0, 0, 0, 0.08);
+          background: rgba(131, 24, 67, 0.08);
           pointer-events: none;
         }
         .slide-to-scan__label {
@@ -162,7 +162,9 @@ export function SlideToScan({
           top: 50%;
           margin-top: -36px;
           border-radius: 50%;
-          background: #000;
+          color: var(--color-primary);
+          background: transparent;
+          border: 2px solid var(--color-primary);
           display: flex;
           align-items: center;
           justify-content: center;

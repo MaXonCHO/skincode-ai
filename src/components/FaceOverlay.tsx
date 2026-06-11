@@ -45,6 +45,58 @@ export function FaceOverlay({
         }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       >
+        {scanning && detected && (
+          <motion.svg
+            className="face-overlay__mesh"
+            viewBox="0 0 200 240"
+            preserveAspectRatio="none"
+            initial={{ opacity: 0, scale: .94, rotateY: -8 }}
+            animate={{ opacity: .92, scale: 1, rotateY: [0, 4, 0, -4, 0] }}
+            transition={{
+              opacity: { duration: .45 },
+              scale: { duration: .45 },
+              rotateY: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+            }}
+          >
+            <defs>
+              <radialGradient id="face-mesh-surface" cx="50%" cy="43%" r="62%">
+                <stop offset="0%" stopColor="rgba(255,255,255,.18)" />
+                <stop offset="58%" stopColor="rgba(224,160,200,.12)" />
+                <stop offset="100%" stopColor="rgba(117,66,198,.04)" />
+              </radialGradient>
+              <linearGradient id="face-mesh-line" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="rgba(126,236,190,.84)" />
+                <stop offset="52%" stopColor="rgba(255,191,126,.82)" />
+                <stop offset="100%" stopColor="rgba(224,160,200,.8)" />
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="120" rx="88" ry="112" fill="url(#face-mesh-surface)" />
+            {[30, 55, 80, 105, 130, 155, 180, 205].map((y) => {
+              const spread = 84 * Math.sqrt(Math.max(0, 1 - Math.pow((y - 120) / 112, 2)))
+              return (
+                <path
+                  key={`horizontal-${y}`}
+                  d={`M ${100 - spread} ${y} Q 100 ${y + (y < 120 ? 13 : -13)} ${100 + spread} ${y}`}
+                  fill="none"
+                  stroke="url(#face-mesh-line)"
+                  strokeWidth="1"
+                />
+              )
+            })}
+            {[-72, -48, -24, 0, 24, 48, 72].map((x) => (
+              <path
+                key={`vertical-${x}`}
+                d={`M ${100 + x * .28} 10 Q ${100 + x} 120 ${100 + x * .25} 230`}
+                fill="none"
+                stroke="url(#face-mesh-line)"
+                strokeWidth="1"
+              />
+            ))}
+            <path d="M38 102 Q100 76 162 102" fill="none" stroke="url(#face-mesh-line)" strokeWidth="1.4" />
+            <path d="M54 166 Q100 196 146 166" fill="none" stroke="url(#face-mesh-line)" strokeWidth="1.4" />
+          </motion.svg>
+        )}
+
         {detected && showLandmarks && FACE_DOTS.map((point, i) => (
           <motion.div
             key={i}
@@ -82,16 +134,28 @@ export function FaceOverlay({
         .face-overlay__frame {
           position: absolute;
           border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+          perspective: 700px;
+        }
+        .face-overlay__mesh {
+          position: absolute;
+          inset: -3%;
+          width: 106%;
+          height: 106%;
+          overflow: visible;
+          filter: drop-shadow(0 0 12px rgba(126,236,190,.22));
+          transform-style: preserve-3d;
+          transform-origin: center;
         }
         .face-overlay__landmark {
           position: absolute;
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
           background: rgba(255, 191, 126, .92);
           transform: translate(-50%, -50%);
           box-shadow: 0 0 9px rgba(255, 174, 112, .66);
           transition: background .35s ease, box-shadow .35s ease;
+          z-index: 2;
         }
         .face-overlay--centered .face-overlay__landmark {
           background: rgba(126, 236, 190, .96);

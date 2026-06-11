@@ -119,7 +119,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
           >
-            <AnalysisProgress currentStep={analysisStep} />
+            <AnalysisProgress currentStep={analysisStep} faceBox={faceBox} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -214,10 +214,9 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
         }
         .scan-screen__analysis {
           position: absolute;
-          bottom: calc(var(--space-lg) + 80px);
-          left: 50%;
-          translate: -50% 0;
+          inset: 0;
           z-index: 15;
+          pointer-events: none;
         }
         .scan-screen__guidance {
           position: absolute;
