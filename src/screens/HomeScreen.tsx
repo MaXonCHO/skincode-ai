@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Logo } from '../components/Logo'
 import { SlideToScan } from '../components/SlideToScan'
 import heroPhoto from '../../photo/new-hero-photo.png'
 
@@ -9,22 +10,9 @@ interface HomeScreenProps {
 export function HomeScreen({ onStart }: HomeScreenProps) {
   return (
     <div className="screen home-screen">
-      <div className="home-screen__content">
-        <motion.div
-          className="home-screen__visual"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <div className="home-screen__image-wrapper">
-            <img
-              src={heroPhoto}
-              alt="Чистая кожа"
-              className="home-screen__image"
-            />
-          </div>
-        </motion.div>
+      <Logo />
 
+      <div className="home-screen__content">
         <motion.div
           className="home-screen__text"
           initial={{ opacity: 0, x: 40 }}
@@ -46,26 +34,44 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           >
             <SlideToScan
               onComplete={onStart}
-              label="Проведите, чтобы начать подбор →"
+              label="Начать подбор"
               completedLabel="Начинаем подбор..."
             />
           </motion.div>
         </motion.div>
+
+        <motion.div
+          className="home-screen__visual"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <div className="home-screen__image-wrapper">
+            <img
+              src={heroPhoto}
+              alt="Чистая кожа"
+              className="home-screen__image"
+            />
+          </div>
+        </motion.div>
       </div>
-      <div className="home-screen__pastel-highlight" />
 
       <style>{`
         .home-screen__content {
           flex: 1;
           display: grid;
-          grid-template-columns: minmax(0, 52%) minmax(0, 48%);
+          grid-template-columns: minmax(0, 48%) minmax(0, 52%);
           background: #fff;
+        }
+        .home-screen > .logo {
+          left: auto;
+          right: var(--space-lg);
         }
         .home-screen__visual {
           position: relative;
           min-width: 0;
           height: 100%;
-          background: #f6f1f3;
+          background: transparent;
         }
         .home-screen__image-wrapper {
           position: absolute;
@@ -111,14 +117,17 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           padding: 0;
         }
         .home-screen__cta .slide-to-scan__track {
-          border-color: #000;
-          background: transparent;
-          box-shadow: none;
+          border: 1px solid rgba(255,255,255,.76);
+          background: rgba(255,255,255,.34);
+          backdrop-filter: blur(24px) saturate(145%);
+          -webkit-backdrop-filter: blur(24px) saturate(145%);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 16px 38px rgba(38,28,48,.12);
         }
         .home-screen__cta .slide-to-scan__thumb {
           color: #000;
-          border-color: #000;
-          box-shadow: none;
+          border: 1px solid rgba(255,255,255,.86);
+          background: rgba(255,255,255,.36);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.84), 0 8px 20px rgba(38,28,48,.12);
         }
         .home-screen__cta .slide-to-scan__label {
           color: rgba(0,0,0,.66);
@@ -126,46 +135,20 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
         .home-screen__cta .slide-to-scan__fill {
           background: rgba(0,0,0,.08);
         }
-        .home-screen__pastel-highlight {
-          position: absolute;
-          z-index: 2;
-          left: 8%;
-          right: 8%;
-          bottom: -62px;
-          height: 118px;
-          border-radius: 50%;
-          background:
-            radial-gradient(circle at 10% 50%, rgba(114,211,157,.34), transparent 28%),
-            radial-gradient(circle at 32% 42%, rgba(255,123,88,.34), transparent 31%),
-            radial-gradient(circle at 52% 55%, rgba(255,171,79,.3), transparent 30%),
-            radial-gradient(circle at 72% 42%, rgba(231,123,211,.32), transparent 32%),
-            radial-gradient(circle at 92% 50%, rgba(151,112,230,.34), transparent 30%);
-          filter: blur(24px);
-          opacity: .68;
-          pointer-events: none;
-        }
-
         @media (orientation: portrait), (max-width: 900px) {
           .home-screen__content {
             display: block;
             position: relative;
-            background: #000;
+            background: #fff;
           }
           .home-screen__visual {
             position: absolute;
             inset: 0;
-            background: #f6f1f3;
-          }
-          .home-screen__image-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 32%, rgba(0,0,0,.46) 100%);
-            pointer-events: none;
+            background: transparent;
           }
           .home-screen__image {
-            object-fit: cover;
-            object-position: center top;
+            object-fit: contain;
+            object-position: center bottom;
             transform: none;
           }
           .home-screen__text {
@@ -179,36 +162,29 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
             border: 0;
             border-radius: 0;
             background: transparent;
-            color: #fff;
+            color: #000;
             backdrop-filter: none;
           }
           .home-screen__title {
-            color: #fff;
+            color: #000;
             font-size: clamp(42px, 9vw, 72px);
-            text-shadow: 0 3px 18px rgba(0,0,0,.42);
+            text-shadow: none;
           }
           .home-screen__subtitle {
-            color: rgba(255,255,255,.78);
+            color: rgba(0,0,0,.64);
             margin-bottom: 28px;
-            text-shadow: 0 2px 12px rgba(0,0,0,.5);
+            text-shadow: none;
           }
           .home-screen__cta .slide-to-scan__track,
           .home-screen__cta .slide-to-scan__thumb {
-            border-color: #fff;
-            color: #fff;
+            border-color: rgba(255,255,255,.8);
+            color: #000;
           }
           .home-screen__cta .slide-to-scan__label {
-            color: rgba(255,255,255,.8);
+            color: rgba(0,0,0,.7);
           }
           .home-screen__cta .slide-to-scan__fill {
-            background: rgba(255,255,255,.12);
-          }
-          .home-screen__pastel-highlight {
-            left: -12%;
-            right: -12%;
-            bottom: -48px;
-            height: 100px;
-            opacity: .58;
+            background: rgba(255,255,255,.22);
           }
         }
       `}</style>

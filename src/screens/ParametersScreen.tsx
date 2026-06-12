@@ -211,6 +211,22 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           padding: 0;
           z-index: 15;
         }
+        .parameters-screen__panel::before {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          left: 4%;
+          right: 4%;
+          top: 4px;
+          bottom: 54px;
+          border-radius: 42px;
+          background: linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.1));
+          border: 1px solid rgba(255,255,255,.24);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.44);
+          pointer-events: none;
+        }
         .parameters-screen__header {
           position: absolute;
           top: calc(var(--space-md) + clamp(40px, 5vw, 56px));
