@@ -50,7 +50,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         {hasCamera && <FaceOverlay showLandmarks={false} />}
       </div>
 
-      <Logo />
+      <Logo variant="light" />
 
       <div className="parameters-screen__header">
         <AnimatePresence mode="wait">
@@ -162,7 +162,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
 
       <style>{`
         .parameters-screen {
-          background: #e9e4f5;
+          background: #000;
         }
         .parameters-screen__camera {
           position: absolute;
@@ -174,14 +174,17 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           height: 100%;
           object-fit: cover;
           transform: scaleX(-1);
-          filter: saturate(.74) brightness(1.08) contrast(.9);
         }
         .parameters-screen__overlay {
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(180deg, rgba(229,221,249,.34) 0%, transparent 32%, rgba(255,226,220,.12) 58%, rgba(221,212,245,.62) 100%);
-          mix-blend-mode: screen;
+          background: linear-gradient(
+            180deg,
+            rgba(0,0,0,.4) 0%,
+            transparent 28%,
+            rgba(0,0,0,.08) 52%,
+            rgba(0,0,0,.78) 100%
+          );
           pointer-events: none;
         }
         .parameters-screen__fallback {
@@ -195,10 +198,7 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         .parameters-screen__fallback-bg {
           position: absolute;
           inset: 0;
-          background:
-            radial-gradient(circle at 22% 18%, #ffe3da, transparent 34%),
-            radial-gradient(circle at 78% 78%, #dcd4f5, transparent 40%),
-            #f3eff9;
+          background: linear-gradient(180deg, #292929 0%, #151515 50%, #050505 100%);
         }
         .parameters-screen__fallback p {
           position: relative;
@@ -234,9 +234,9 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           font-weight: 600;
           text-align: center;
           margin-bottom: 0;
-          color: #302c3b;
+          color: #fff;
           letter-spacing: .06em;
-          text-shadow: 0 1px 12px rgba(255,255,255,.86);
+          text-shadow: 0 2px 12px rgba(0,0,0,.4);
         }
         .parameters-screen__action {
           margin-top: 16px;
@@ -258,19 +258,19 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
         .option-card {
           height: 242px;
           font-family: inherit;
-          background: rgba(255,255,255,.58);
-          backdrop-filter: blur(22px) saturate(115%);
-          -webkit-backdrop-filter: blur(22px) saturate(115%);
-          border-radius: 24px;
+          background: rgba(255,255,255,.22);
+          backdrop-filter: blur(18px) saturate(145%);
+          -webkit-backdrop-filter: blur(18px) saturate(145%);
+          border-radius: 18px;
           padding: 12px 12px 15px;
           text-align: center;
-          border: 1px solid rgba(255,255,255,.88);
-          box-shadow: inset 0 1px 0 #fff, 0 16px 42px rgba(95,80,130,.13);
+          border: 1px solid rgba(255,255,255,.42);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.42), 0 12px 30px rgba(0,0,0,.14);
           transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         .option-card--center {
           border-color: #fff;
-          box-shadow: inset 0 1px 0 #fff, 0 20px 48px rgba(95,80,130,.18), 0 0 0 1px rgba(211,199,242,.44);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 16px 38px rgba(0,0,0,.24), 0 0 0 1px rgba(255,255,255,.22);
         }
         .option-card__image-frame {
           width: 100%;
@@ -278,11 +278,11 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           margin: 0 auto 11px;
           overflow: hidden;
           border-radius: 13px;
-          background: rgba(255,255,255,.48);
+          background: rgba(255,255,255,.2);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,.84);
-          box-shadow: inset 0 1px 0 #fff;
+          border: 1px solid rgba(255,255,255,.46);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.34);
         }
         .option-card__image {
           width: 100%;
@@ -299,21 +299,21 @@ export function ParametersScreen({ onComplete }: ParametersScreenProps) {
           display: block;
           font-size: 17px;
           font-weight: 600;
-          color: #302c3b;
+          color: #fff;
           margin-bottom: 2px;
         }
         .option-card__desc {
           display: block;
           font-size: 12px;
-          color: rgba(48,44,59,.62);
+          color: rgba(255,255,255,.72);
           line-height: 1.35;
         }
         .parameters-screen .btn-primary,
         .parameters-screen .btn-secondary {
           color: #fff;
-          background: rgba(255,255,255,.16);
-          border-color: rgba(255,255,255,.88);
-          box-shadow: 0 10px 28px rgba(91,76,126,.12);
+          background: transparent;
+          border-color: rgba(255,255,255,.78);
+          box-shadow: none;
         }
         .parameters-screen .podium-carousel__dot::before {
           border-color: rgba(255,255,255,.58);

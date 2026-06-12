@@ -7,22 +7,22 @@
 }
 
 :root {
-  --color-primary: #7768a8;
-  --color-secondary: #dca9c0;
-  --color-accent: #9c8dcc;
-  --color-background: #f4f0fa;
-  --color-foreground: #292634;
-  --color-muted: #716b7e;
-  --color-focus: #8d7cc4;
+  --color-primary: #831843;
+  --color-secondary: #ec4899;
+  --color-accent: #7542c6;
+  --color-background: #fdf2f8;
+  --color-foreground: #321126;
+  --color-muted: #765c6e;
+  --color-focus: #7542c6;
   --bg-white: #ffffff;
   --bg-soft: var(--color-background);
   --text-primary: var(--color-foreground);
   --text-secondary: var(--color-muted);
   --border-color: var(--color-primary);
-  --border-light: rgba(119, 104, 168, 0.16);
-  --glass-bg: rgba(255, 255, 255, 0.58);
-  --glass-border: rgba(255, 255, 255, 0.86);
-  --shadow-soft: 0 18px 54px rgba(102, 88, 137, 0.14);
+  --border-light: rgba(131, 24, 67, 0.16);
+  --glass-bg: rgba(255, 255, 255, 0.38);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --shadow-soft: 0 16px 42px rgba(83, 38, 73, 0.14);
   --motion-fast: 220ms;
   --motion-smooth: 500ms;
   --space-sm: clamp(12px, 1.5vw, 24px);
@@ -59,10 +59,7 @@ body {
   height: 100dvh;
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 12% 18%, rgba(255, 220, 214, .72), transparent 34%),
-    radial-gradient(circle at 86% 12%, rgba(224, 216, 255, .9), transparent 38%),
-    var(--color-background);
+  background: var(--color-background);
 }
 
 .app-frame {
@@ -83,19 +80,18 @@ body {
 
 .beauty-gradient {
   background:
-    radial-gradient(circle at 16% 12%, rgba(255, 215, 207, .72), transparent 34%),
-    radial-gradient(circle at 54% 86%, rgba(244, 205, 222, .56), transparent 38%),
-    radial-gradient(circle at 88% 18%, rgba(216, 207, 250, .74), transparent 38%),
+    radial-gradient(circle at 16% 12%, rgba(249, 168, 212, .28), transparent 32%),
+    radial-gradient(circle at 88% 82%, rgba(139, 92, 246, .14), transparent 34%),
     var(--color-background);
 }
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(30px) saturate(118%);
-  -webkit-backdrop-filter: blur(30px) saturate(118%);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), var(--shadow-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), var(--shadow-soft);
 }
 
 .glow-button,
@@ -112,7 +108,7 @@ body {
   border-radius: 60px;
   padding: clamp(14px, 1.6vw, 22px) clamp(40px, 5vw, 64px);
   font-size: clamp(14px, 1.3vw, 18px);
-  box-shadow: 0 12px 30px rgba(119, 104, 168, .12);
+  box-shadow: 0 12px 28px rgba(117, 66, 198, .12);
   transition: transform var(--motion-fast) cubic-bezier(.22,1,.36,1), color var(--motion-fast) ease, border-color var(--motion-fast) ease;
 }
 

@@ -146,17 +146,18 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
       <style>{`
         .recommendations-screen {
           background:
-            radial-gradient(circle at 10% 86%, rgba(255, 225, 217, .92), transparent 34%),
-            radial-gradient(circle at 30% 8%, rgba(246, 208, 219, .7), transparent 34%),
-            radial-gradient(circle at 74% 12%, rgba(224, 214, 250, .88), transparent 38%),
-            radial-gradient(circle at 88% 86%, rgba(211, 204, 244, .74), transparent 38%),
-            #f3eff8;
+            radial-gradient(circle at 8% 88%, rgba(114, 211, 157, 0.58), transparent 29%),
+            radial-gradient(circle at 22% 12%, rgba(255, 123, 88, 0.52), transparent 31%),
+            radial-gradient(circle at 55% 4%, rgba(255, 171, 79, 0.48), transparent 29%),
+            radial-gradient(circle at 82% 18%, rgba(231, 123, 211, 0.5), transparent 34%),
+            radial-gradient(circle at 88% 84%, rgba(151, 112, 230, 0.55), transparent 35%),
+            #f8eef4;
         }
         .recommendations-screen::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.3);
+          background: rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(42px);
           pointer-events: none;
         }
@@ -178,18 +179,18 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           justify-self: end;
           padding: 8px;
           border-radius: 25px;
-          background: rgba(255, 255, 255, 0.58);
-          border: 1px solid rgba(255, 255, 255, 0.88);
-          box-shadow: inset 0 1px 0 #fff, 0 18px 46px rgba(99, 82, 133, 0.14);
-          backdrop-filter: blur(26px) saturate(115%);
-          -webkit-backdrop-filter: blur(26px) saturate(115%);
+          background: rgba(255, 255, 255, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.64);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 18px 46px rgba(72, 45, 78, 0.16);
+          backdrop-filter: blur(24px) saturate(145%);
+          -webkit-backdrop-filter: blur(24px) saturate(145%);
         }
         .recommendations-screen__camera {
           position: relative;
           height: clamp(94px, 11vh, 124px);
           overflow: hidden;
           border-radius: 18px;
-          background: linear-gradient(135deg, #f1d4d9, #cfc5ec);
+          background: linear-gradient(135deg, #d6a6bb, #8d79ae);
         }
         .recommendations-screen__video {
           width: 100%;
@@ -214,8 +215,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           font-weight: 700;
           letter-spacing: .13em;
           text-transform: uppercase;
-          color: rgba(55,48,68,.58);
-          text-shadow: none;
+          color: rgba(255, 255, 255, .78);
+          text-shadow: 0 2px 18px rgba(66, 37, 72, .18);
         }
         .recommendations-screen__title {
           max-width: 760px;
@@ -223,8 +224,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           font-weight: 650;
           letter-spacing: -0.04em;
           line-height: .98;
-          color: #302c3b;
-          text-shadow: none;
+          color: #fff;
+          text-shadow: 0 4px 24px rgba(64, 35, 72, .2);
         }
         .recommendations-screen__profile {
           display: grid;
@@ -239,8 +240,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           padding: 8px 10px;
           min-width: 0;
           border-radius: 14px;
-          background: rgba(255,255,255,.56);
-          border: 1px solid rgba(255,255,255,.84);
+          background: rgba(255,255,255,.3);
+          border: 1px solid rgba(255,255,255,.48);
         }
         .recommendations-screen__profile-label {
           font-size: 10px;
@@ -271,20 +272,20 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         .product-card {
           height: clamp(330px, 43vh, 410px);
-          background: rgba(255,255,255,.56);
-          backdrop-filter: blur(28px) saturate(115%);
-          -webkit-backdrop-filter: blur(28px) saturate(115%);
+          background: rgba(255,255,255,.34);
+          backdrop-filter: blur(26px) saturate(140%);
+          -webkit-backdrop-filter: blur(26px) saturate(140%);
           border-radius: 32px;
           padding: 24px;
           text-align: left;
-          border: 1px solid rgba(255,255,255,.88);
+          border: 1px solid rgba(255,255,255,.54);
           position: relative;
-          box-shadow: inset 0 1px 0 #fff, 0 20px 50px rgba(99,82,133,.13);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 20px 50px rgba(62, 36, 72, .14);
         }
         .product-card--center {
-          background: rgba(255,255,255,.7);
+          background: rgba(255,255,255,.44);
           border-color: rgba(255,255,255,.9);
-          box-shadow: inset 0 1px 0 white, 0 26px 66px rgba(99,82,133,.18);
+          box-shadow: inset 0 1px 0 white, 0 26px 66px rgba(62, 36, 72, .2);
         }
         .product-card__main {
           display: grid;
@@ -365,9 +366,9 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .product-card__description,
         .product-card__score {
           border-radius: 20px;
-          background: rgba(255,255,255,.56);
-          border: 1px solid rgba(255,255,255,.86);
-          box-shadow: inset 0 1px 0 #fff;
+          background: rgba(255,255,255,.32);
+          border: 1px solid rgba(255,255,255,.5);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
         }
         .product-card__description {
           padding: 13px;
@@ -394,7 +395,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           font-size: 10px;
           padding: 4px 7px;
           border-radius: 20px;
-          background: rgba(231,224,249,.62);
+          background: rgba(255,255,255,.36);
           color: rgba(20,20,20,.6);
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -422,7 +423,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           inset: 0;
           border-radius: inherit;
           padding: 7px;
-          background: conic-gradient(from 210deg, #e9a9b7, #c5b5eb var(--score), rgba(255,255,255,.62) 0);
+          background: conic-gradient(from 210deg, #ff7b58, #ee80c7, #9770e6, #72d39d var(--score), rgba(255,255,255,.38) 0);
           -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;

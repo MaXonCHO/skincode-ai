@@ -61,10 +61,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           flex: 1;
           display: grid;
           grid-template-columns: minmax(0, 52%) minmax(0, 48%);
-          background:
-            radial-gradient(circle at 14% 18%, rgba(255,223,213,.92), transparent 34%),
-            radial-gradient(circle at 86% 82%, rgba(218,208,250,.88), transparent 42%),
-            #f5f1fa;
+          background: #fff;
         }
         .home-screen > .logo {
           filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.32));
@@ -79,13 +76,6 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           inset: 0;
           overflow: hidden;
         }
-        .home-screen__image-wrapper::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(145deg, rgba(237,220,250,.2), rgba(255,216,200,.13));
-          pointer-events: none;
-        }
         .home-screen__image {
           width: 100%;
           height: 100%;
@@ -97,7 +87,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           max-width: 760px;
           padding: clamp(48px, 7vw, 120px);
           text-align: left;
-          color: var(--color-foreground);
+          color: #000;
         }
         .home-screen__title {
           font-size: clamp(52px, 5.4vw, 88px);
@@ -105,13 +95,13 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           line-height: 1.1;
           letter-spacing: 0.04em;
           margin-bottom: 28px;
-          color: var(--color-foreground);
+          color: #000;
         }
         .home-screen__subtitle {
           max-width: 650px;
           font-size: clamp(20px, 1.9vw, 30px);
           line-height: 1.6;
-          color: rgba(41,38,52,.62);
+          color: rgba(0,0,0,.62);
           margin-bottom: 48px;
           font-weight: 400;
         }
@@ -123,37 +113,38 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           padding: 0;
         }
         .home-screen__cta .slide-to-scan__track {
-          border-color: rgba(255,255,255,.92);
-          background: rgba(255,255,255,.42);
-          box-shadow: inset 0 1px 0 #fff, 0 18px 46px rgba(108,92,143,.14);
+          border-color: #000;
+          background: transparent;
+          box-shadow: none;
         }
         .home-screen__cta .slide-to-scan__thumb {
-          color: var(--color-primary);
-          border-color: rgba(255,255,255,.96);
-          background: rgba(255,255,255,.78);
-          box-shadow: 0 8px 22px rgba(108,92,143,.16);
+          color: #000;
+          border-color: #000;
+          box-shadow: none;
         }
         .home-screen__cta .slide-to-scan__label {
-          color: rgba(41,38,52,.66);
+          color: rgba(0,0,0,.66);
         }
         .home-screen__cta .slide-to-scan__fill {
-          background: linear-gradient(90deg, rgba(249,208,211,.32), rgba(215,205,247,.48));
+          background: rgba(0,0,0,.08);
         }
 
         @media (orientation: portrait), (max-width: 900px) {
           .home-screen__content {
             display: block;
             position: relative;
-            background: #ece6f4;
+            background: #000;
           }
           .home-screen__visual {
             position: absolute;
             inset: 0;
           }
           .home-screen__image-wrapper::after {
-            background:
-              linear-gradient(180deg, rgba(225,216,250,.12) 0%, transparent 38%, rgba(67,55,79,.4) 100%),
-              linear-gradient(145deg, rgba(237,220,250,.16), rgba(255,216,200,.1));
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 32%, rgba(0,0,0,.46) 100%);
+            pointer-events: none;
           }
           .home-screen__image {
             object-position: center 32%;
@@ -184,15 +175,8 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
           }
           .home-screen__cta .slide-to-scan__track,
           .home-screen__cta .slide-to-scan__thumb {
-            border-color: rgba(255,255,255,.94);
+            border-color: #fff;
             color: #fff;
-          }
-          .home-screen__cta .slide-to-scan__track {
-            background: rgba(255,255,255,.2);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 18px 42px rgba(50,38,66,.16);
-          }
-          .home-screen__cta .slide-to-scan__thumb {
-            background: rgba(255,255,255,.3);
           }
           .home-screen__cta .slide-to-scan__label {
             color: rgba(255,255,255,.8);

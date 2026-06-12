@@ -130,9 +130,9 @@ export function SlideToScan({
           overflow: hidden;
           cursor: grab;
           touch-action: none;
-          background: rgba(255,255,255,.38);
-          border: 1px solid rgba(255,255,255,.9);
-          box-shadow: inset 0 1px 0 #fff, 0 16px 42px rgba(105,91,140,.15);
+          background: transparent;
+          border: 2px solid var(--color-primary);
+          box-shadow: 0 16px 38px rgba(25,18,30,.14);
         }
         .slide-to-scan__fill {
           position: absolute;
@@ -140,7 +140,7 @@ export function SlideToScan({
           top: 4px;
           bottom: 4px;
           border-radius: 40px;
-          background: linear-gradient(90deg, rgba(237,205,220,.36), rgba(218,209,249,.44));
+          background: rgba(131, 24, 67, 0.08);
           pointer-events: none;
         }
         .slide-to-scan__label {
@@ -163,12 +163,12 @@ export function SlideToScan({
           margin-top: -36px;
           border-radius: 50%;
           color: var(--color-primary);
-          background: rgba(255,255,255,.72);
-          border: 1px solid rgba(255,255,255,.96);
+          background: transparent;
+          border: 2px solid var(--color-primary);
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 7px 20px rgba(100,84,137,.18), inset 0 1px 0 #fff;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
           z-index: 2;
         }
         .slide-to-scan--done .slide-to-scan__track {

@@ -103,7 +103,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
         />
       </div>
 
-      <Logo />
+      <Logo variant="light" />
 
       <div className="scan-screen__header">
         <h2 className="scan-screen__title">Сканирование кожи</h2>
@@ -156,7 +156,7 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
 
       <style>{`
         .scan-screen {
-          background: #e9e4f5;
+          background: #000;
         }
         .scan-screen__camera {
           position: absolute;
@@ -168,15 +168,17 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           height: 100%;
           object-fit: cover;
           transform: scaleX(-1);
-          filter: saturate(.72) brightness(1.1) contrast(.9);
         }
         .scan-screen__overlay {
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(180deg, rgba(227,219,248,.32) 0%, transparent 34%, rgba(250,225,225,.16) 66%, rgba(215,207,240,.42) 100%),
-            rgba(244,240,250,.1);
-          mix-blend-mode: screen;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.35) 0%,
+            transparent 25%,
+            transparent 65%,
+            rgba(0, 0, 0, 0.5) 100%
+          );
           pointer-events: none;
         }
         .scan-screen__fallback {
@@ -187,21 +189,18 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
         .scan-screen__fallback-gradient {
           position: absolute;
           inset: 0;
-          background:
-            radial-gradient(circle at 28% 20%, #ffe5dc, transparent 36%),
-            radial-gradient(circle at 75% 78%, #dcd4f5, transparent 42%),
-            #f2eef8;
+          background: linear-gradient(180deg, #292929 0%, #151515 50%, #050505 100%);
         }
         .scan-screen__grid {
           position: absolute;
           inset: 0;
           z-index: 2;
-          opacity: .42;
+          opacity: .28;
           background-image:
-            linear-gradient(rgba(255,255,255,.36) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,.36) 1px, transparent 1px),
-            linear-gradient(rgba(220,210,245,.18) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(220,210,245,.18) 1px, transparent 1px);
+            linear-gradient(rgba(255,255,255,.17) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.17) 1px, transparent 1px),
+            linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
           background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
           mask-image: radial-gradient(circle at center, #000 20%, rgba(0,0,0,.65) 58%, transparent 92%);
           pointer-events: none;
@@ -220,13 +219,13 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           font-weight: 600;
           letter-spacing: 0.06em;
           margin-bottom: 8px;
-          color: #302c3b;
-          text-shadow: 0 1px 12px rgba(255,255,255,.86);
+          color: white;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
         }
         .scan-screen__hint {
           font-size: var(--font-sm);
-          color: rgba(48,44,59,.7);
-          text-shadow: 0 1px 8px rgba(255,255,255,.86);
+          color: rgba(255, 255, 255, 0.85);
+          text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
         }
         .scan-screen__analysis {
           position: absolute;
@@ -247,11 +246,11 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           justify-content: center;
           gap: 10px;
           border-radius: 28px;
-          background: rgba(255,255,255,.5);
-          color: #302c3b;
-          border: 1px solid rgba(255,255,255,.82);
-          backdrop-filter: blur(26px) saturate(115%);
-          box-shadow: inset 0 1px 0 #fff, 0 16px 44px rgba(90,75,125,.14);
+          background: rgba(255,255,255,.28);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,.46);
+          backdrop-filter: blur(24px) saturate(145%);
+          box-shadow: 0 16px 44px rgba(0,0,0,.18);
           overflow: hidden;
         }
         .scan-screen__guidance strong {
@@ -264,12 +263,12 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           height: 9px;
           flex: 0 0 auto;
           border-radius: 50%;
-          background: #a99bd1;
-          box-shadow: 0 0 0 5px rgba(255,255,255,.5);
+          background: #fff;
+          box-shadow: 0 0 0 5px rgba(255,255,255,.14);
         }
         .scan-screen__guidance--ready .scan-screen__guidance-dot {
-          background: #8f80c2;
-          box-shadow: 0 0 0 5px rgba(255,255,255,.64);
+          background: #fff;
+          box-shadow: 0 0 0 5px rgba(255,255,255,.2);
         }
         .scan-screen__hold {
           position: absolute;
@@ -279,13 +278,13 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           height: 3px;
           border-radius: 3px;
           overflow: hidden;
-          background: rgba(174,158,213,.2);
+          background: rgba(255,255,255,.16);
         }
         .scan-screen__hold span {
           display: block;
           height: 100%;
           border-radius: inherit;
-          background: linear-gradient(90deg, #e6b6c2, #a99bd1);
+          background: #fff;
           transition: width .08s linear;
         }
         .scan-screen__error {
@@ -304,8 +303,8 @@ export function ScanScreen({ onComplete }: ScanScreenProps) {
           z-index: 16;
           padding: 8px 14px;
           border-radius: 20px;
-          background: rgba(255,255,255,.58);
-          color: rgba(48,44,59,.72);
+          background: rgba(255,255,255,.3);
+          color: rgba(255,255,255,.8);
           font-size: 11px;
           backdrop-filter: blur(18px);
         }
