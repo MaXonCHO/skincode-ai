@@ -6,7 +6,6 @@ import { ScanScreen } from './screens/ScanScreen'
 import { ParametersScreen } from './screens/ParametersScreen'
 import { RecommendationsScreen } from './screens/RecommendationsScreen'
 import { getRecommendations } from './utils/matching'
-import { getSharedProfile, setSharedProfile } from './utils/shareRecommendations'
 import type { ScoredProduct, Screen, SkinProfile } from './types'
 
 const pageTransition = {
@@ -17,19 +16,16 @@ const pageTransition = {
 }
 
 export default function App() {
-  const sharedProfile = getSharedProfile()
-  const [screen, setScreen] = useState<Screen>(sharedProfile ? 'recommendations' : 'home')
-  const [profile, setProfile] = useState<SkinProfile>(
-    sharedProfile ?? { undertone: 'Neutral', skinType: 'Combination' }
-  )
-  const [recommendations, setRecommendations] = useState<ScoredProduct[]>(
-    sharedProfile ? getRecommendations(sharedProfile) : []
-  )
+  const [screen, setScreen] = useState<Screen>('home')
+  const [profile, setProfile] = useState<SkinProfile>({
+    undertone: 'Neutral',
+    skinType: 'Combination',
+  })
+  const [recommendations, setRecommendations] = useState<ScoredProduct[]>([])
 
   const handleParametersComplete = useCallback((newProfile: SkinProfile) => {
     setProfile(newProfile)
     setRecommendations(getRecommendations(newProfile))
-    setSharedProfile(newProfile)
     setScreen('recommendations')
   }, [])
 
@@ -38,7 +34,6 @@ export default function App() {
     setScreen('home')
     setProfile({ undertone: 'Neutral', skinType: 'Combination' })
     setRecommendations([])
-    setSharedProfile(null)
   }, [])
 
   useEffect(() => {

@@ -1,25 +1,21 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
-import type { SkinProfile } from '../types'
-import { getRecommendationsUrl } from '../utils/shareRecommendations'
+
+const FOUNDATION_COLLECTION_URL = 'https://goldapple.ru/azija/makijazh/dlja-lica/tonal-nye-sredstva?srsltid=AfmBOorvdZxzLKxLTcsiGYV2zlFjAiefIrVsSvarWtjDAmxoe2pRTdLC'
 
 interface RecommendationsQrCardProps {
-  profile: SkinProfile
+  isCenter: boolean
 }
 
-export function RecommendationsQrCard({ profile }: RecommendationsQrCardProps) {
-  const url = useMemo(
-    () => getRecommendationsUrl(profile),
-    [profile.skinType, profile.undertone]
-  )
+export function RecommendationsQrCard({ isCenter }: RecommendationsQrCardProps) {
   const [qrImage, setQrImage] = useState('')
 
   useEffect(() => {
     let active = true
 
-    QRCode.toDataURL(url, {
-      width: 280,
-      margin: 1,
+    QRCode.toDataURL(FOUNDATION_COLLECTION_URL, {
+      width: 420,
+      margin: 2,
       color: { dark: '#171419', light: '#ffffff' },
       errorCorrectionLevel: 'M',
     }).then((image) => {
@@ -29,57 +25,111 @@ export function RecommendationsQrCard({ profile }: RecommendationsQrCardProps) {
     return () => {
       active = false
     }
-  }, [url])
+  }, [])
 
   return (
-    <div className="recommendations-qr-card">
-      <div className="recommendations-qr-card__code">
-        {qrImage && <img src={qrImage} alt="QR-код полной подборки тональных средств" />}
+    <div className={`product-card recommendations-qr-card ${isCenter ? 'product-card--center' : ''}`}>
+      <div className="recommendations-qr-card__accent">Полная коллекция</div>
+      <div className="recommendations-qr-card__content">
+        <div className="recommendations-qr-card__copy">
+          <span className="recommendations-qr-card__eyebrow">Больше оттенков</span>
+          <strong>Все тональные средства в одном месте</strong>
+          <p>Отсканируйте QR-код, чтобы открыть полную коллекцию на телефоне.</p>
+        </div>
+        <div className="recommendations-qr-card__code">
+          {qrImage && <img src={qrImage} alt="QR-код коллекции тональных средств" />}
+        </div>
       </div>
-      <strong>Полная подборка</strong>
-      <span>Отсканируйте, чтобы открыть на телефоне</span>
 
       <style>{`
         .recommendations-qr-card {
-          flex: 0 0 178px;
-          height: 242px;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 12px;
-          border: 1px solid rgba(255,255,255,.72);
-          border-radius: 18px;
-          background: rgba(255,255,255,.3);
-          color: #fff;
-          text-align: center;
-          backdrop-filter: blur(20px) saturate(145%);
-          -webkit-backdrop-filter: blur(20px) saturate(145%);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.58), 0 14px 34px rgba(0,0,0,.16);
+          justify-content: space-between;
+          overflow: hidden;
+          color: #171419;
+        }
+        .recommendations-qr-card::before {
+          content: '';
+          position: absolute;
+          width: 240px;
+          height: 240px;
+          right: -55px;
+          bottom: -80px;
+          border-radius: 50%;
+          background: rgba(210,235,11,.35);
+          filter: blur(30px);
+          pointer-events: none;
+        }
+        .recommendations-qr-card__accent {
+          position: relative;
+          z-index: 1;
+          align-self: flex-start;
+          padding: 7px 11px;
+          border: 1px solid rgba(23,20,25,.12);
+          border-radius: 999px;
+          background: rgba(210,235,11,.72);
+          font-size: 10px;
+          font-weight: 750;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+        }
+        .recommendations-qr-card__content {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1fr 174px;
+          align-items: end;
+          gap: 18px;
+        }
+        .recommendations-qr-card__copy {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding-bottom: 4px;
+          text-align: left;
+        }
+        .recommendations-qr-card__eyebrow {
+          margin-bottom: 9px;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          color: rgba(20,20,20,.48);
+        }
+        .recommendations-qr-card__copy strong {
+          font-size: clamp(22px, 2vw, 29px);
+          line-height: 1.04;
+          letter-spacing: -.035em;
+        }
+        .recommendations-qr-card__copy p {
+          margin: 13px 0 0;
+          font-size: 12px;
+          line-height: 1.45;
+          color: rgba(20,20,20,.62);
         }
         .recommendations-qr-card__code {
-          width: 132px;
-          height: 132px;
-          margin-bottom: 10px;
-          padding: 7px;
-          border-radius: 14px;
+          width: 174px;
+          height: 174px;
+          padding: 10px;
+          border-radius: 22px;
           background: #fff;
-          box-shadow: 0 9px 24px rgba(0,0,0,.12);
+          border: 1px solid rgba(255,255,255,.92);
+          box-shadow: inset 0 1px 0 #fff, 0 18px 34px rgba(62,36,72,.18);
         }
         .recommendations-qr-card__code img {
           width: 100%;
           height: 100%;
           display: block;
         }
-        .recommendations-qr-card strong {
-          font-size: 14px;
-          line-height: 1.15;
-        }
-        .recommendations-qr-card span {
-          margin-top: 4px;
-          font-size: 10px;
-          line-height: 1.25;
-          color: rgba(255,255,255,.7);
+        @media (max-height: 720px) {
+          .recommendations-qr-card__content {
+            grid-template-columns: 1fr 150px;
+          }
+          .recommendations-qr-card__code {
+            width: 150px;
+            height: 150px;
+          }
         }
       `}</style>
     </div>

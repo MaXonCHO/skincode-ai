@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { PodiumCarousel } from '../components/PodiumCarousel'
+import { RecommendationsQrCard } from '../components/RecommendationsQrCard'
 import { useCameraStream } from '../hooks/useCameraStream'
 import { formatPrice, formatProductTag, formatProfileValue } from '../utils/matching'
 import type { ScoredProduct, SkinProfile } from '../types'
@@ -11,6 +12,10 @@ import productFour from '../../photo/product-4.png'
 
 const productImages = [productOne, productTwo, productThree, productFour]
 
+type RecommendationCarouselItem =
+  | { kind: 'product'; product: ScoredProduct }
+  | { kind: 'qr' }
+
 interface RecommendationsScreenProps {
   profile: SkinProfile
   products: ScoredProduct[]
@@ -20,6 +25,10 @@ interface RecommendationsScreenProps {
 export function RecommendationsScreen({ profile, products, onRestart }: RecommendationsScreenProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const { videoRef, hasCamera } = useCameraStream(true)
+  const carouselItems = useMemo<RecommendationCarouselItem[]>(
+    () => [...products.map((product) => ({ kind: 'product' as const, product })), { kind: 'qr' }],
+    [products]
+  )
 
   return (
     <div className="screen recommendations-screen beauty-gradient">
@@ -68,27 +77,31 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
 
       <div className="recommendations-screen__carousel">
         <PodiumCarousel
-          items={products}
+          items={carouselItems}
           selectedIndex={selectedIndex}
           onSelect={setSelectedIndex}
-          getItemLabel={(product) => `${product.brand} ${product.name}`}
+          getItemLabel={(item) => item.kind === 'qr'
+            ? 'Открыть полную коллекцию тональных средств'
+            : `${item.product.brand} ${item.product.name}`}
           cardWidth={430}
           cardGap={36}
-          renderCard={(product, isCenter) => (
+          renderCard={(item, isCenter) => item.kind === 'qr' ? (
+            <RecommendationsQrCard isCenter={isCenter} />
+          ) : (
             <div className={`product-card ${isCenter ? 'product-card--center' : ''}`}>
               <div className="product-card__main">
                 <div className="product-card__identity">
-                  <span className="product-card__brand">{product.brand}</span>
-                  <h3 className="product-card__name">{product.name}</h3>
-                  <span className="product-card__shade">{product.shade}</span>
-                  <span className="product-card__price">{formatPrice(product.price)}</span>
+                  <span className="product-card__brand">{item.product.brand}</span>
+                  <h3 className="product-card__name">{item.product.name}</h3>
+                  <span className="product-card__shade">{item.product.shade}</span>
+                  <span className="product-card__price">{formatPrice(item.product.price)}</span>
                 </div>
                 <div className="product-card__jar-stage">
-                  <span className="product-card__halo" style={{ background: product.imageColor }} />
+                  <span className="product-card__halo" style={{ background: item.product.imageColor }} />
                   <img
                     className="product-card__jar"
-                    src={productImages[(Number(product.id) - 1) % productImages.length]}
-                    alt={`${product.brand} ${product.name}`}
+                    src={productImages[(Number(item.product.id) - 1) % productImages.length]}
+                    alt={`${item.product.brand} ${item.product.name}`}
                     draggable={false}
                   />
                 </div>
@@ -97,22 +110,22 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
               <div className="product-card__details">
                 <div className="product-card__description">
                   <span>О тоне</span>
-                  <p className="product-card__desc">{product.description}</p>
+                  <p className="product-card__desc">{item.product.description}</p>
                   <div className="product-card__tags">
-                    <span>{formatProductTag(product.coverage)}</span>
-                    <span>{formatProductTag(product.finish)}</span>
+                    <span>{formatProductTag(item.product.coverage)}</span>
+                    <span>{formatProductTag(item.product.finish)}</span>
                   </div>
                 </div>
                 <div
                   className="product-card__score"
                   role="img"
-                  aria-label={`Совпадение тона ${product.matchScore} процентов`}
+                  aria-label={`Совпадение тона ${item.product.matchScore} процентов`}
                 >
                   <div
                     className="product-card__pie"
-                    style={{ '--score': `${product.matchScore * 3.6}deg` } as React.CSSProperties}
+                    style={{ '--score': `${item.product.matchScore * 3.6}deg` } as React.CSSProperties}
                   >
-                    <div><strong>{product.matchScore}%</strong></div>
+                    <div><strong>{item.product.matchScore}%</strong></div>
                   </div>
                   <span>Совпадение тона</span>
                 </div>
