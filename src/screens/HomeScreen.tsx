@@ -203,7 +203,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
             color: rgba(0,0,0,.7);
           }
           .home-screen__cta .slide-to-scan__fill {
-            background: rgba(255,255,255,.22);
+            background: rgba(210,235,11,.34);
           }
         }
       `}</style>

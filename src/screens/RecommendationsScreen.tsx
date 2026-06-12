@@ -452,11 +452,18 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         }
         @media (max-height: 720px) {
           .recommendations-screen__camera {
-            width: 64px;
-            height: 64px;
+            width: 52px;
+            height: 52px;
           }
           .recommendations-screen__profile-item {
-            display: none;
+            min-width: 96px;
+            padding: 5px 7px;
+          }
+          .recommendations-screen__profile-label {
+            font-size: 9px;
+          }
+          .recommendations-screen__profile-item strong {
+            font-size: 11px;
           }
           .product-card {
             height: 335px;
