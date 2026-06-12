@@ -9,10 +9,10 @@ import { getRecommendations } from './utils/matching'
 import type { ScoredProduct, Screen, SkinProfile } from './types'
 
 const pageTransition = {
-  initial: { opacity: 0, scale: 0.985, filter: 'blur(8px)' },
-  animate: { opacity: 1, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, scale: 1.01, filter: 'blur(6px)' },
-  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -24 },
+  transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
 }
 
 export default function App() {

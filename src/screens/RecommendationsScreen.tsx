@@ -145,7 +145,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at 50% 112%, rgba(210,235,11,.34), transparent 52%);
+          background: radial-gradient(ellipse 82% 44% at 50% 112%, rgba(210,235,11,.4), transparent 64%);
           backdrop-filter: blur(24px);
           pointer-events: none;
         }
@@ -153,7 +153,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           position: relative;
           z-index: 2;
           display: grid;
-          grid-template-columns: 1fr minmax(170px, 18vw);
+          grid-template-columns: minmax(0, 1fr) minmax(330px, 36vw);
           align-items: start;
           gap: clamp(30px, 5vw, 84px);
           padding: 20px var(--space-lg) 0;
@@ -164,6 +164,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           justify-content: flex-end;
           gap: 7px;
           justify-self: end;
+          min-width: 0;
         }
         .recommendations-screen__camera {
           position: relative;
@@ -214,7 +215,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           flex-direction: column;
           gap: 1px;
           padding: 7px 9px;
-          min-width: 0;
+          flex: 1 1 120px;
+          min-width: 112px;
           border-radius: 14px;
           background: rgba(255,255,255,.34);
           border: 1px solid rgba(255,255,255,.58);
@@ -228,7 +230,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .recommendations-screen__profile-item strong {
           font-size: 13px;
           line-height: 1.15;
-          overflow-wrap: anywhere;
+          white-space: nowrap;
         }
         .recommendations-screen__carousel {
           flex: 1;
@@ -425,10 +427,21 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           margin: 0 auto;
         }
         .recommendations-screen__restart-button {
+          color: #000;
+          border-color: #000;
           background: rgba(255,255,255,.24);
           box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 14px 34px rgba(72,45,78,.12);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
+        }
+        @media (max-width: 1100px) and (orientation: landscape) {
+          .recommendations-screen__top {
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 40vw);
+            gap: 24px;
+          }
+          .recommendations-screen__profile-row {
+            width: 100%;
+          }
         }
         .recommendations-screen .podium-carousel__dots {
           margin-top: 6px;

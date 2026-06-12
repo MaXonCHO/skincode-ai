@@ -66,7 +66,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
         .home-screen > .logo {
           top: clamp(12px, 1.5vw, 22px);
           left: auto;
-          right: clamp(18px, 2.6vw, 42px);
+          right: clamp(8px, 1.4vw, 22px);
           width: clamp(180px, 18vw, 280px);
         }
         .home-screen__visual {
