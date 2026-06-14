@@ -407,11 +407,14 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           align-items: center;
           gap: 8px;
           padding: 0 20px;
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 12px 30px rgba(62,36,72,.1);
+          border-color: transparent;
+          background: transparent;
+          box-shadow: none;
         }
         .catalog-screen__control--active {
-          border-color: #171419;
-          background: rgba(255,255,255,.78);
+          border-color: transparent;
+          background: transparent;
+          color: rgba(23,20,25,.62);
         }
         .catalog-screen__control span {
           display: grid;
@@ -572,7 +575,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           border-radius: 26px;
           color: #171419;
           text-decoration: none;
-          background: rgba(255,255,255,.64);
+          background: #fff;
           transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s ease, border-color .25s ease;
         }
         .catalog-product:hover {
@@ -797,8 +800,9 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             justify-content: center;
           }
           .catalog-screen__control--active {
-            border-color: rgba(23,20,25,.12);
-            background: rgba(255,255,255,.92);
+            border-color: transparent;
+            background: transparent;
+            color: rgba(23,20,25,.62);
           }
           .catalog-screen__menu {
             position: absolute;
@@ -1012,7 +1016,9 @@ function SortButton({ label, value, selected, onSelect }: SortButtonProps) {
 }
 
 function getOptions(values: string[]): string[] {
-  return [...new Set(values)].sort((a, b) => a.localeCompare(b, 'ru'))
+  return [...new Set(values)]
+    .filter((value) => value !== 'не указана' && value !== 'не указан')
+    .sort((a, b) => a.localeCompare(b, 'ru'))
 }
 
 function matchesSelection(value: string, selection: string): boolean {
