@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
-
-const FOUNDATION_COLLECTION_URL = 'https://goldapple.ru/azija/makijazh/dlja-lica/tonal-nye-sredstva?srsltid=AfmBOorvdZxzLKxLTcsiGYV2zlFjAiefIrVsSvarWtjDAmxoe2pRTdLC'
+import { getCatalogUrl } from '../utils/catalog'
+import type { SkinProfile } from '../types'
 
 interface RecommendationsQrCardProps {
   isCenter: boolean
+  profile: SkinProfile
 }
 
-export function RecommendationsQrCard({ isCenter }: RecommendationsQrCardProps) {
+export function RecommendationsQrCard({ isCenter, profile }: RecommendationsQrCardProps) {
   const [qrImage, setQrImage] = useState('')
 
   useEffect(() => {
     let active = true
+    const catalogUrl = getCatalogUrl(profile)
 
-    QRCode.toDataURL(FOUNDATION_COLLECTION_URL, {
+    QRCode.toDataURL(catalogUrl, {
       width: 420,
       margin: 2,
       color: { dark: '#171419', light: '#ffffff' },
@@ -25,7 +27,7 @@ export function RecommendationsQrCard({ isCenter }: RecommendationsQrCardProps) 
     return () => {
       active = false
     }
-  }, [])
+  }, [profile.skinType, profile.undertone])
 
   return (
     <div className={`product-card recommendations-qr-card ${isCenter ? 'product-card--center' : ''}`}>
@@ -33,8 +35,8 @@ export function RecommendationsQrCard({ isCenter }: RecommendationsQrCardProps) 
       <div className="recommendations-qr-card__content">
         <div className="recommendations-qr-card__copy">
           <span className="recommendations-qr-card__eyebrow">Больше оттенков</span>
-          <strong>Все тональные средства в одном месте</strong>
-          <p>Отсканируйте QR-код, чтобы открыть полную коллекцию на телефоне.</p>
+          <strong>Все подходящие оттенки в одном месте</strong>
+          <p>Отсканируйте QR-код, чтобы открыть вашу персональную коллекцию.</p>
         </div>
         <div className="recommendations-qr-card__code">
           {qrImage && <img src={qrImage} alt="QR-код коллекции тональных средств" />}

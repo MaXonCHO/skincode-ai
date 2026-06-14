@@ -86,7 +86,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           cardWidth={430}
           cardGap={36}
           renderCard={(item, isCenter) => item.kind === 'qr' ? (
-            <RecommendationsQrCard isCenter={isCenter} />
+            <RecommendationsQrCard isCenter={isCenter} profile={profile} />
           ) : (
             <div className={`product-card ${isCenter ? 'product-card--center' : ''}`}>
               <div className="product-card__main">
