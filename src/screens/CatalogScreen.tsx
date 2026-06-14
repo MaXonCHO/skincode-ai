@@ -7,9 +7,11 @@ import productOne from '../../photo/product-1.png'
 import productTwo from '../../photo/product-2.png'
 import productThree from '../../photo/product-3.png'
 import productFour from '../../photo/product-4.png'
+import productFive from '../../photo/product-5.png'
+import productSix from '../../photo/product-6.png'
 
 type PriceSort = 'price-asc' | 'price-desc'
-const productImages = [productOne, productTwo, productThree, productFour]
+const productImages = [productOne, productTwo, productThree, productFour, productFive, productSix]
 
 interface CatalogScreenProps {
   profile: SkinProfile
@@ -232,7 +234,6 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
               </div>
 
               <div className="catalog-product__swatch">
-                <span className="catalog-product__shade-bg" style={{ background: rgbColor(product.shade.rgb) }} />
                 <img
                   className="catalog-product__jar"
                   src={productImages[index % productImages.length]}
@@ -525,9 +526,10 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
         }
         .catalog-screen__apply {
           padding: 0 18px;
-          border-color: #171419;
-          background: #171419;
-          color: #fff;
+          border-color: #d2eb0b;
+          background: #d2eb0b;
+          color: #171419;
+          box-shadow: 0 10px 24px rgba(210,235,11,.28);
         }
         .catalog-screen__sort-option {
           min-height: 44px;
@@ -612,22 +614,9 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           height: 150px;
           margin: 13px 0;
           overflow: visible;
-          border: 1px solid rgba(255,255,255,.72);
+          border: 0;
           border-radius: 20px;
-          background: rgba(255,255,255,.32);
-        }
-        .catalog-product__shade-bg {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          opacity: .5;
-        }
-        .catalog-product__shade-bg::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(145deg, rgba(255,255,255,.72), transparent 52%, rgba(255,255,255,.18));
+          background: transparent;
         }
         .catalog-product__jar {
           position: absolute;
@@ -815,20 +804,20 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             position: fixed;
             top: auto;
             z-index: 51;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            right: 10px;
+            bottom: max(10px, env(safe-area-inset-bottom));
+            left: 10px;
             width: auto;
             grid-template-columns: 1fr;
             max-height: min(78dvh, 620px);
             overflow-y: auto;
-            padding: 14px 18px calc(18px + env(safe-area-inset-bottom));
-            border: 1px solid rgba(23,20,25,.08);
-            border-radius: 28px 28px 0 0;
-            background: #fdfcfb;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            box-shadow: 0 -18px 60px rgba(42,22,48,.22);
+            padding: 14px 18px 18px;
+            border: 1px solid rgba(255,255,255,.88);
+            border-radius: 30px;
+            background: rgba(255,255,255,.9);
+            backdrop-filter: blur(28px) saturate(135%);
+            -webkit-backdrop-filter: blur(28px) saturate(135%);
+            box-shadow: inset 0 1px 0 #fff, 0 22px 70px rgba(42,22,48,.24);
             transform-origin: bottom center;
           }
           .catalog-screen__active-filters {
@@ -862,14 +851,14 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             z-index: 2;
             top: -14px;
             padding: 10px 0 12px;
-            background: #fdfcfb;
+            background: rgba(255,255,255,.92);
           }
           .catalog-screen__menu-actions {
             position: sticky;
             z-index: 2;
-            bottom: calc(-18px - env(safe-area-inset-bottom));
-            padding: 12px 0 calc(18px + env(safe-area-inset-bottom));
-            background: #fdfcfb;
+            bottom: -18px;
+            padding: 12px 0 18px;
+            background: rgba(255,255,255,.92);
           }
           .catalog-screen__filter select {
             min-height: 50px;
@@ -890,33 +879,30 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             padding: 22px 3px 14px;
           }
           .catalog-screen__grid {
-            grid-template-columns: 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
           }
           .catalog-product {
-            display: grid;
-            grid-template-columns: 112px minmax(0, 1fr);
-            grid-template-rows: auto 1fr;
-            gap: 0 14px;
-            min-height: 190px;
-            padding: 12px;
-            border-radius: 24px;
+            display: flex;
+            min-height: 310px;
+            flex-direction: column;
+            gap: 0;
+            padding: 10px;
+            border-radius: 22px;
           }
           .catalog-product__top {
-            grid-column: 1 / -1;
-            padding: 1px 2px 9px;
+            width: 100%;
+            padding: 1px 1px 4px;
           }
           .catalog-product__swatch {
-            grid-column: 1;
-            grid-row: 2;
-            height: 142px;
-            margin: 0;
-            border-radius: 18px;
+            width: 100%;
+            height: 128px;
+            margin: 0 0 5px;
           }
           .catalog-product__jar {
-            bottom: -28px;
-            width: 150px;
-            height: 185px;
+            bottom: -24px;
+            width: 145px;
+            height: 170px;
           }
           .catalog-product__shade-dot {
             right: 7px;
@@ -925,26 +911,33 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             height: 20px;
           }
           .catalog-product__body {
-            grid-column: 2;
-            grid-row: 2;
             display: flex;
             min-width: 0;
+            flex: 1;
             flex-direction: column;
           }
           .catalog-product__body h2 {
             min-height: 0;
-            font-size: 17px;
-            line-height: 1.16;
+            display: -webkit-box;
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.15;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
           }
           .catalog-product__shade {
-            margin: 6px 0 9px;
+            margin: 5px 0 7px;
+            overflow: hidden;
+            font-size: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .catalog-product__tags {
             min-height: 0;
           }
           .catalog-product__tags span {
             padding: 4px 6px;
-            font-size: 8px;
+            font-size: 7px;
           }
           .catalog-product__footer {
             margin-top: auto;
@@ -963,11 +956,10 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             font-size: clamp(36px, 11vw, 48px);
           }
           .catalog-product {
-            grid-template-columns: 102px minmax(0, 1fr);
-            gap: 0 12px;
+            min-height: 300px;
           }
           .catalog-product__swatch {
-            height: 136px;
+            height: 120px;
           }
         }
       `}</style>
