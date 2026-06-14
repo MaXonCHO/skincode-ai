@@ -78,12 +78,6 @@ export function getCatalogProfile(): SkinProfile | null {
   return { undertone, skinType }
 }
 
-export function clearCatalogUrl() {
-  const url = new URL(window.location.href)
-  url.search = ''
-  window.history.replaceState({}, '', url)
-}
-
 function getBestShade(shades: CatalogShade[], undertone: Undertone): CatalogShade {
   return shades.reduce((best, shade) =>
     getShadeScore(shade, undertone) > getShadeScore(best, undertone) ? shade : best

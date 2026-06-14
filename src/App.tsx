@@ -6,7 +6,7 @@ import { ScanScreen } from './screens/ScanScreen'
 import { ParametersScreen } from './screens/ParametersScreen'
 import { RecommendationsScreen } from './screens/RecommendationsScreen'
 import { CatalogScreen } from './screens/CatalogScreen'
-import { clearCatalogUrl, getCatalogProfile } from './utils/catalog'
+import { getCatalogProfile } from './utils/catalog'
 import { getRecommendations } from './utils/matching'
 import type { ScoredProduct, Screen, SkinProfile } from './types'
 
@@ -37,11 +37,6 @@ export default function App() {
     setScreen('home')
     setProfile({ undertone: 'Neutral', skinType: 'Combination' })
     setRecommendations([])
-  }, [])
-
-  const handleCatalogBack = useCallback(() => {
-    clearCatalogUrl()
-    setScreen('home')
   }, [])
 
   useEffect(() => {
@@ -80,7 +75,7 @@ export default function App() {
           )}
           {screen === 'catalog' && (
             <motion.div key="catalog" className="screen-wrapper" {...pageTransition}>
-              <CatalogScreen profile={profile} onBack={handleCatalogBack} />
+              <CatalogScreen profile={profile} />
             </motion.div>
           )}
         </AnimatePresence>

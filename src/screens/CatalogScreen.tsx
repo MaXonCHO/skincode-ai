@@ -1,26 +1,49 @@
-import { useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { getCatalogMatches } from '../utils/catalog'
 import { formatPrice, formatProfileValue } from '../utils/matching'
 import type { SkinProfile } from '../types'
 
-type PriceSort = 'match' | 'price-asc' | 'price-desc'
+type PriceSort = 'price-asc' | 'price-desc'
 
 interface CatalogScreenProps {
   profile: SkinProfile
-  onBack: () => void
 }
 
-export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
+type OpenMenu = 'filter' | 'sort' | null
+
+export function CatalogScreen({ profile }: CatalogScreenProps) {
   const matches = useMemo(() => getCatalogMatches(profile), [profile])
   const [texture, setTexture] = useState('all')
   const [finish, setFinish] = useState('all')
   const [brand, setBrand] = useState('all')
-  const [priceSort, setPriceSort] = useState<PriceSort>('match')
+  const [priceSort, setPriceSort] = useState<PriceSort>('price-asc')
+  const [openMenu, setOpenMenu] = useState<OpenMenu>(null)
 
-  const textures = useMemo(() => getOptions(matches.map((item) => item.texture)), [matches])
-  const finishes = useMemo(() => getOptions(matches.map((item) => item.finish)), [matches])
-  const brands = useMemo(() => getOptions(matches.map((item) => item.brand)), [matches])
+  const textures = useMemo(
+    () => getOptions(matches
+      .filter((item) => matchesSelection(item.finish, finish) && matchesSelection(item.brand, brand))
+      .map((item) => item.texture)),
+    [brand, finish, matches]
+  )
+  const finishes = useMemo(
+    () => getOptions(matches
+      .filter((item) => matchesSelection(item.texture, texture) && matchesSelection(item.brand, brand))
+      .map((item) => item.finish)),
+    [brand, matches, texture]
+  )
+  const brands = useMemo(
+    () => getOptions(matches
+      .filter((item) => matchesSelection(item.texture, texture) && matchesSelection(item.finish, finish))
+      .map((item) => item.brand)),
+    [finish, matches, texture]
+  )
+
+  useEffect(() => {
+    if (texture !== 'all' && !textures.includes(texture)) setTexture('all')
+    if (finish !== 'all' && !finishes.includes(finish)) setFinish('all')
+    if (brand !== 'all' && !brands.includes(brand)) setBrand('all')
+  }, [brand, brands, finish, finishes, texture, textures])
 
   const visibleProducts = useMemo(() => {
     const filtered = matches.filter((product) =>
@@ -38,8 +61,9 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
     setTexture('all')
     setFinish('all')
     setBrand('all')
-    setPriceSort('match')
+    setPriceSort('price-asc')
   }
+  const activeFilterCount = [texture, finish, brand].filter((value) => value !== 'all').length
 
   return (
     <div className="screen catalog-screen">
@@ -47,11 +71,6 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
       <div className="catalog-screen__glow catalog-screen__glow--lime" />
 
       <header className="catalog-screen__header">
-        <button className="catalog-screen__back" type="button" onClick={onBack}>
-          <span aria-hidden="true">←</span>
-          На главную
-        </button>
-
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,24 +93,68 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
       </header>
 
       <main className="catalog-screen__main">
-        <section className="catalog-screen__filters glass" aria-label="Фильтры каталога">
-          <FilterSelect label="Текстура" value={texture} onChange={setTexture} options={textures} />
-          <FilterSelect label="Финиш" value={finish} onChange={setFinish} options={finishes} />
-          <FilterSelect label="Бренд" value={brand} onChange={setBrand} options={brands} />
+        <div className="catalog-screen__controls">
+          <div className="catalog-screen__control-wrap">
+            <button
+              type="button"
+              className={`catalog-screen__control ${openMenu === 'filter' ? 'catalog-screen__control--active' : ''}`}
+              onClick={() => setOpenMenu(openMenu === 'filter' ? null : 'filter')}
+              aria-expanded={openMenu === 'filter'}
+              aria-controls="catalog-filter-menu"
+            >
+              Фильтр
+              {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
+            </button>
+            <AnimatePresence>
+              {openMenu === 'filter' && (
+                <motion.section
+                  id="catalog-filter-menu"
+                  className="catalog-screen__menu glass"
+                  aria-label="Фильтры каталога"
+                  initial={{ opacity: 0, y: -8, scale: .98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: .98 }}
+                  transition={{ duration: .2 }}
+                >
+                  <FilterSelect label="Текстура" value={texture} onChange={setTexture} options={textures} />
+                  <FilterSelect label="Финиш" value={finish} onChange={setFinish} options={finishes} />
+                  <FilterSelect label="Бренд" value={brand} onChange={setBrand} options={brands} />
+                  <button type="button" className="catalog-screen__reset" onClick={resetFilters}>
+                    Сбросить фильтры
+                  </button>
+                </motion.section>
+              )}
+            </AnimatePresence>
+          </div>
 
-          <label className="catalog-screen__filter">
-            <span>Сортировка</span>
-            <select value={priceSort} onChange={(event) => setPriceSort(event.target.value as PriceSort)}>
-              <option value="match">По совпадению</option>
-              <option value="price-asc">Сначала дешевле</option>
-              <option value="price-desc">Сначала дороже</option>
-            </select>
-          </label>
-
-          <button type="button" className="catalog-screen__reset" onClick={resetFilters}>
-            Сбросить
-          </button>
-        </section>
+          <div className="catalog-screen__control-wrap">
+            <button
+              type="button"
+              className={`catalog-screen__control ${openMenu === 'sort' ? 'catalog-screen__control--active' : ''}`}
+              onClick={() => setOpenMenu(openMenu === 'sort' ? null : 'sort')}
+              aria-expanded={openMenu === 'sort'}
+              aria-controls="catalog-sort-menu"
+            >
+              Сортировка
+            </button>
+            <AnimatePresence>
+              {openMenu === 'sort' && (
+                <motion.section
+                  id="catalog-sort-menu"
+                  className="catalog-screen__menu catalog-screen__menu--sort glass"
+                  aria-label="Сортировка каталога"
+                  initial={{ opacity: 0, y: -8, scale: .98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: .98 }}
+                  transition={{ duration: .2 }}
+                >
+                  <SortButton label="Сначала дешевле" value="price-asc" selected={priceSort} onSelect={setPriceSort} />
+                  <SortButton label="Сначала дороже" value="price-desc" selected={priceSort} onSelect={setPriceSort} />
+                </motion.section>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
 
         <div className="catalog-screen__summary">
           <p><strong>{visibleProducts.length}</strong> подходящих средств</p>
@@ -187,12 +250,12 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
         .catalog-screen__header {
           min-height: 300px;
           display: grid;
-          grid-template-columns: 180px 1fr auto;
+          grid-template-columns: 1fr auto;
           align-items: center;
           gap: 32px;
           padding: 32px 0 24px;
         }
-        .catalog-screen__back,
+        .catalog-screen__control,
         .catalog-screen__reset,
         .catalog-screen__empty button {
           min-height: 44px;
@@ -207,17 +270,7 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
           font-weight: 650;
           transition: background .22s ease, border-color .22s ease, transform .22s ease;
         }
-        .catalog-screen__back {
-          justify-self: start;
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          padding: 0 18px;
-        }
-        .catalog-screen__back span {
-          font-size: 20px;
-        }
-        .catalog-screen__back:hover,
+        .catalog-screen__control:hover,
         .catalog-screen__reset:hover,
         .catalog-screen__empty button:hover {
           border-color: #171419;
@@ -271,16 +324,59 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
         .catalog-screen__main {
           padding-bottom: 80px;
         }
-        .catalog-screen__filters {
+        .catalog-screen__controls {
           position: sticky;
-          z-index: 10;
+          z-index: 20;
           top: 16px;
-          display: grid;
-          grid-template-columns: repeat(4, minmax(130px, 1fr)) auto;
+          display: flex;
           gap: 10px;
-          padding: 12px;
-          border-radius: 24px;
-          background: rgba(255,255,255,.58);
+          width: fit-content;
+        }
+        .catalog-screen__control-wrap {
+          position: relative;
+        }
+        .catalog-screen__control {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 20px;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 12px 30px rgba(62,36,72,.1);
+        }
+        .catalog-screen__control--active {
+          border-color: #171419;
+          background: rgba(255,255,255,.78);
+        }
+        .catalog-screen__control span {
+          display: grid;
+          width: 20px;
+          height: 20px;
+          place-items: center;
+          border-radius: 50%;
+          background: #d2eb0b;
+          font-size: 10px;
+        }
+        .catalog-screen__menu {
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 0;
+          width: min(420px, calc(100vw - 24px));
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          padding: 14px;
+          border-radius: 22px;
+          background: rgba(255,255,255,.78);
+          transform-origin: top left;
+        }
+        .catalog-screen__menu--sort {
+          width: 220px;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+        .catalog-screen__menu .catalog-screen__filter:last-of-type,
+        .catalog-screen__menu .catalog-screen__reset {
+          grid-column: 1 / -1;
         }
         .catalog-screen__filter select {
           width: 100%;
@@ -299,8 +395,24 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
           outline-offset: 2px;
         }
         .catalog-screen__reset {
-          align-self: end;
           padding: 0 18px;
+        }
+        .catalog-screen__sort-option {
+          min-height: 44px;
+          padding: 0 13px;
+          border: 1px solid transparent;
+          border-radius: 13px;
+          background: transparent;
+          color: #171419;
+          cursor: pointer;
+          font: inherit;
+          font-size: 13px;
+          text-align: left;
+        }
+        .catalog-screen__sort-option:hover,
+        .catalog-screen__sort-option--active {
+          border-color: rgba(23,20,25,.12);
+          background: rgba(210,235,11,.3);
         }
         .catalog-screen__summary {
           display: flex;
@@ -447,14 +559,10 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
         }
         @media (max-width: 1100px) {
           .catalog-screen__header {
-            grid-template-columns: 150px 1fr;
+            grid-template-columns: 1fr;
           }
           .catalog-screen__profile {
-            grid-column: 2;
             padding-top: 0;
-          }
-          .catalog-screen__filters {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
           .catalog-screen__grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -483,10 +591,29 @@ export function CatalogScreen({ profile, onBack }: CatalogScreenProps) {
             min-width: 0;
             flex: 1;
           }
-          .catalog-screen__filters {
-            position: relative;
-            top: 0;
+          .catalog-screen__controls {
+            position: sticky;
+            width: 100%;
+          }
+          .catalog-screen__control-wrap {
+            flex: 1;
+          }
+          .catalog-screen__control {
+            width: 100%;
+            justify-content: center;
+          }
+          .catalog-screen__menu {
+            position: fixed;
+            top: auto;
+            right: 12px;
+            bottom: 12px;
+            left: 12px;
+            width: auto;
             grid-template-columns: 1fr;
+            transform-origin: bottom center;
+          }
+          .catalog-screen__menu--sort {
+            width: auto;
           }
           .catalog-screen__summary {
             align-items: flex-start;
@@ -530,8 +657,32 @@ function FilterSelect({ label, value, options, onChange }: FilterSelectProps) {
   )
 }
 
+interface SortButtonProps {
+  label: string
+  value: PriceSort
+  selected: PriceSort
+  onSelect: (value: PriceSort) => void
+}
+
+function SortButton({ label, value, selected, onSelect }: SortButtonProps) {
+  return (
+    <button
+      type="button"
+      className={`catalog-screen__sort-option ${selected === value ? 'catalog-screen__sort-option--active' : ''}`}
+      onClick={() => onSelect(value)}
+      aria-pressed={selected === value}
+    >
+      {label}
+    </button>
+  )
+}
+
 function getOptions(values: string[]): string[] {
   return [...new Set(values)].sort((a, b) => a.localeCompare(b, 'ru'))
+}
+
+function matchesSelection(value: string, selection: string): boolean {
+  return selection === 'all' || value === selection
 }
 
 function rgbColor(rgb: { r: number; g: number; b: number }): string {
