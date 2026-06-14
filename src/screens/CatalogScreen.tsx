@@ -10,7 +10,7 @@ import productFour from '../../photo/product-4.png'
 import productFive from '../../photo/product-5.png'
 import productSix from '../../photo/product-6.png'
 
-type PriceSort = 'price-asc' | 'price-desc'
+type CatalogSort = 'match-desc' | 'price-asc' | 'price-desc'
 const productImages = [productOne, productTwo, productThree, productFour, productFive, productSix]
 
 interface CatalogScreenProps {
@@ -24,7 +24,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
   const [texture, setTexture] = useState('all')
   const [finish, setFinish] = useState('all')
   const [brand, setBrand] = useState('all')
-  const [priceSort, setPriceSort] = useState<PriceSort>('price-asc')
+  const [catalogSort, setCatalogSort] = useState<CatalogSort>('price-asc')
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null)
 
   const textures = useMemo(
@@ -59,16 +59,19 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
       (brand === 'all' || product.brand === brand)
     )
 
-    if (priceSort === 'price-asc') return [...filtered].sort((a, b) => a.price - b.price)
-    if (priceSort === 'price-desc') return [...filtered].sort((a, b) => b.price - a.price)
+    if (catalogSort === 'match-desc') {
+      return [...filtered].sort((a, b) => b.matchScore - a.matchScore || a.price - b.price)
+    }
+    if (catalogSort === 'price-asc') return [...filtered].sort((a, b) => a.price - b.price)
+    if (catalogSort === 'price-desc') return [...filtered].sort((a, b) => b.price - a.price)
     return filtered
-  }, [brand, finish, matches, priceSort, texture])
+  }, [brand, catalogSort, finish, matches, texture])
 
   const resetFilters = () => {
     setTexture('all')
     setFinish('all')
     setBrand('all')
-    setPriceSort('price-asc')
+    setCatalogSort('price-asc')
   }
   const activeFilterCount = [texture, finish, brand].filter((value) => value !== 'all').length
 
@@ -179,12 +182,16 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
                     <strong>Сортировка</strong>
                     <button type="button" onClick={() => setOpenMenu(null)} aria-label="Закрыть сортировку">×</button>
                   </div>
-                  <SortButton label="Сначала дешевле" value="price-asc" selected={priceSort} onSelect={(value) => {
-                    setPriceSort(value)
+                  <SortButton label="По совпадению" value="match-desc" selected={catalogSort} onSelect={(value) => {
+                    setCatalogSort(value)
                     setOpenMenu(null)
                   }} />
-                  <SortButton label="Сначала дороже" value="price-desc" selected={priceSort} onSelect={(value) => {
-                    setPriceSort(value)
+                  <SortButton label="Сначала дешевле" value="price-asc" selected={catalogSort} onSelect={(value) => {
+                    setCatalogSort(value)
+                    setOpenMenu(null)
+                  }} />
+                  <SortButton label="Сначала дороже" value="price-desc" selected={catalogSort} onSelect={(value) => {
+                    setCatalogSort(value)
                     setOpenMenu(null)
                   }} />
                 </motion.section>
@@ -997,9 +1004,9 @@ function FilterSelect({ label, value, options, onChange }: FilterSelectProps) {
 
 interface SortButtonProps {
   label: string
-  value: PriceSort
-  selected: PriceSort
-  onSelect: (value: PriceSort) => void
+  value: CatalogSort
+  selected: CatalogSort
+  onSelect: (value: CatalogSort) => void
 }
 
 function SortButton({ label, value, selected, onSelect }: SortButtonProps) {

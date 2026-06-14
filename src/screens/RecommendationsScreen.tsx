@@ -158,8 +158,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(circle at 88% 4%, rgba(255,151,196,.34), transparent 31%),
-            radial-gradient(circle at 9% 58%, rgba(255,190,216,.22), transparent 27%),
+            radial-gradient(circle at 88% 4%, rgba(255,151,196,.18), transparent 27%),
             radial-gradient(ellipse 82% 44% at 50% 112%, rgba(210,235,11,.4), transparent 64%);
           backdrop-filter: blur(24px);
           pointer-events: none;
@@ -233,7 +232,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           flex: 1 1 120px;
           min-width: 112px;
           border-radius: 14px;
-          background: rgba(255,248,252,.5);
+          background: rgba(255,255,255,.46);
           border: 1px solid rgba(255,255,255,.58);
         }
         .recommendations-screen__profile-label {
@@ -271,9 +270,9 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 20px 50px rgba(62, 36, 72, .14);
         }
         .product-card--center {
-          background: rgba(255,250,253,.5);
-          border-color: rgba(255,210,229,.86);
-          box-shadow: inset 0 1px 0 white, 0 26px 66px rgba(190, 78, 130, .18);
+          background: rgba(255,255,255,.48);
+          border-color: rgba(255,255,255,.9);
+          box-shadow: inset 0 1px 0 white, 0 26px 66px rgba(62, 36, 72, .18);
         }
         .product-card__main {
           display: grid;
@@ -383,7 +382,7 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
           font-weight: 650;
           padding: 6px 9px;
           border-radius: 20px;
-          background: rgba(255,225,238,.46);
+          background: rgba(255,255,255,.42);
           color: rgba(20,20,20,.68);
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -444,8 +443,8 @@ export function RecommendationsScreen({ profile, products, onRestart }: Recommen
         .recommendations-screen__restart-button {
           color: #000;
           border-color: rgba(23,20,25,.72);
-          background: rgba(255,239,247,.52);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 14px 34px rgba(190,78,130,.14);
+          background: rgba(255,255,255,.42);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 14px 34px rgba(72,45,78,.12);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
         }
