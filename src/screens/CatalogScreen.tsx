@@ -324,7 +324,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           min-height: 44px;
           border: 1px solid rgba(23,20,25,.2);
           border-radius: 999px;
-          background: rgba(255,255,255,.38);
+          background: rgba(255,255,255,.58);
           backdrop-filter: blur(18px);
           color: #171419;
           cursor: pointer;
@@ -368,7 +368,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           padding: 12px 14px;
           border: 1px solid rgba(255,255,255,.75);
           border-radius: 18px;
-          background: rgba(255,255,255,.4);
+          background: rgba(255,255,255,.62);
           backdrop-filter: blur(22px);
           box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 36px rgba(62,36,72,.08);
         }
@@ -436,7 +436,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           padding: 0 10px 0 13px;
           border: 1px solid rgba(23,20,25,.13);
           border-radius: 999px;
-          background: rgba(255,255,255,.72);
+          background: rgba(255,255,255,.84);
           color: #171419;
           cursor: pointer;
           font: inherit;
@@ -463,7 +463,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           gap: 10px;
           padding: 14px;
           border-radius: 22px;
-          background: rgba(255,255,255,.78);
+          background: rgba(255,255,255,.88);
           transform-origin: top left;
         }
         .catalog-screen__menu--sort {
@@ -511,7 +511,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           padding: 0 36px 0 13px;
           border: 1px solid rgba(23,20,25,.13);
           border-radius: 13px;
-          background: rgba(255,255,255,.5);
+          background: rgba(255,255,255,.72);
           color: #171419;
           cursor: pointer;
           font: inherit;
@@ -572,7 +572,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           border-radius: 26px;
           color: #171419;
           text-decoration: none;
-          background: rgba(255,255,255,.46);
+          background: rgba(255,255,255,.64);
           transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s ease, border-color .25s ease;
         }
         .catalog-product:hover {
@@ -668,7 +668,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           padding: 5px 7px;
           border: 1px solid rgba(23,20,25,.09);
           border-radius: 999px;
-          background: rgba(255,255,255,.4);
+          background: rgba(255,255,255,.62);
           color: rgba(23,20,25,.62);
           font-size: 9px;
           text-transform: uppercase;
@@ -780,7 +780,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             padding: 5px;
             border: 1px solid rgba(255,255,255,.72);
             border-radius: 999px;
-            background: rgba(255,255,255,.58);
+            background: rgba(255,255,255,.76);
             backdrop-filter: blur(24px) saturate(145%);
             -webkit-backdrop-filter: blur(24px) saturate(145%);
             box-shadow: inset 0 1px 0 #fff, 0 14px 32px rgba(62,36,72,.12);
@@ -798,27 +798,32 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
           }
           .catalog-screen__control--active {
             border-color: rgba(23,20,25,.12);
-            background: rgba(255,255,255,.72);
+            background: rgba(255,255,255,.92);
           }
           .catalog-screen__menu {
-            position: fixed;
-            top: auto;
-            z-index: 51;
-            right: 10px;
-            bottom: max(10px, env(safe-area-inset-bottom));
-            left: 10px;
-            width: auto;
+            position: absolute;
+            top: calc(100% + 10px);
+            z-index: 53;
+            right: auto;
+            bottom: auto;
+            left: 0;
+            width: calc(200% + 10px);
             grid-template-columns: 1fr;
-            max-height: min(78dvh, 620px);
+            max-height: min(68dvh, 560px);
             overflow-y: auto;
             padding: 14px 18px 18px;
             border: 1px solid rgba(255,255,255,.88);
             border-radius: 30px;
-            background: rgba(255,255,255,.9);
+            background: rgba(255,255,255,.94);
             backdrop-filter: blur(28px) saturate(135%);
             -webkit-backdrop-filter: blur(28px) saturate(135%);
-            box-shadow: inset 0 1px 0 #fff, 0 22px 70px rgba(42,22,48,.24);
-            transform-origin: bottom center;
+            box-shadow: inset 0 1px 0 #fff, 0 22px 60px rgba(42,22,48,.2);
+            transform-origin: top left;
+          }
+          .catalog-screen__control-wrap:last-child .catalog-screen__menu {
+            right: 0;
+            left: auto;
+            transform-origin: top right;
           }
           .catalog-screen__active-filters {
             flex-wrap: nowrap;
@@ -851,14 +856,14 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             z-index: 2;
             top: -14px;
             padding: 10px 0 12px;
-            background: rgba(255,255,255,.92);
+            background: rgba(255,255,255,.96);
           }
           .catalog-screen__menu-actions {
             position: sticky;
             z-index: 2;
             bottom: -18px;
             padding: 12px 0 18px;
-            background: rgba(255,255,255,.92);
+            background: rgba(255,255,255,.96);
           }
           .catalog-screen__filter select {
             min-height: 50px;
@@ -870,7 +875,7 @@ export function CatalogScreen({ profile }: CatalogScreenProps) {
             min-height: 50px;
           }
           .catalog-screen__menu--sort {
-            width: auto;
+            width: min(240px, calc(200% + 10px));
           }
           .catalog-screen__summary {
             align-items: flex-start;
